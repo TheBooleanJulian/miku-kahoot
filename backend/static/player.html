@@ -31,6 +31,7 @@
   }
   .err { color: var(--danger); font-size: 0.95rem; min-height: 1.2rem; }
   .dim { color: var(--dim); }
+  .site-footer { color: var(--dim); font-size: 0.75rem; text-align: center; padding: 0.6rem 1rem; }
 
   .wait-pulse { width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--teal); animation: pulse2 1.4s ease-in-out infinite; }
   @keyframes pulse2 { 0%,100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
@@ -94,6 +95,7 @@ function renderJoin(err) {
       <button class="primary" onclick="doJoin()">Join</button>
       <div class="err">${err || ''}</div>
     </div>
+    <div class="site-footer mono">Built by TheBooleanJulian</div>
   `);
 }
 

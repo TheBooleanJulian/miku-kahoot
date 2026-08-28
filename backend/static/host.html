@@ -25,7 +25,8 @@
     overflow: hidden;
   }
   .mono { font-family: 'JetBrains Mono', monospace; }
-  #app { height: 100vh; display: flex; flex-direction: column; }
+  #app { height: 100vh; display: flex; flex-direction: column; padding-bottom: 2.4rem; }
+  .site-footer { position: fixed; bottom: 0; left: 0; right: 0; color: var(--dim); font-size: 0.8rem; text-align: center; padding: 0.6rem; background: var(--void); }
 
   /* ---------- Lobby ---------- */
   .lobby { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
@@ -108,6 +109,7 @@
 </head>
 <body>
 <div id="app"></div>
+<div class="site-footer mono">Built by TheBooleanJulian</div>
 
 <script>
 const app = document.getElementById('app');
@@ -147,7 +149,7 @@ function renderLobby() {
     </button>`).join('');
   render(`
     <div class="lobby">
-      <div class="pin-label">Join at yourdomain.com/play — Game PIN</div>
+      <div class="pin-label">Join at https://miku-kahoot.thebooleanjulian.dev/play — Game PIN</div>
       <div class="pin mono">${state.pin || '------'}</div>
       <div class="join-hint"><span class="player-count">${state.players.length}</span> player${state.players.length===1?'':'s'} joined</div>
       <div class="player-grid">${state.players.map(p => `<div class="chip">${escapeHtml(p.name)}</div>`).join('')}</div>
