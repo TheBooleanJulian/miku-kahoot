@@ -13,14 +13,15 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, UploadFile, File, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
+QUIZ_FILE = BASE_DIR / "questions.json"
 
-with open(BASE_DIR / "questions.json", encoding="utf-8") as f:
+with open(QUIZ_FILE, encoding="utf-8") as f:
     QUIZ_DATA = json.load(f)
 
 app = FastAPI()
@@ -28,6 +29,18 @@ app.mount("/media", StaticFiles(directory=STATIC_DIR / "media"), name="media")
 
 BASE_POINTS = 1000
 MIN_POINTS = 100
+
+
+def save_quiz_data(data):
+    """Persist new quiz data to disk and hot-swap the in-memory copy.
+
+    Rooms keep their own round/question index — swapping QUIZ_DATA just means
+    the next question a room broadcasts reflects the latest saved content.
+    """
+    with open(QUIZ_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    QUIZ_DATA.clear()
+    QUIZ_DATA.update(data)
 
 
 def is_multi(q):
@@ -164,6 +177,42 @@ async def rounds_meta():
         {"id": r["id"], "title": r["title"], "type": r["type"], "count": len(r["questions"])}
         for r in QUIZ_DATA["rounds"]
     ]
+
+
+@app.get("/admin")
+async def admin():
+    return nocache(STATIC_DIR / "admin.html")
+
+
+@app.get("/api/questions")
+async def api_get_questions():
+    return QUIZ_DATA
+
+
+@app.post("/api/questions")
+async def api_save_questions(data: dict):
+    if "rounds" not in data or not isinstance(data["rounds"], list):
+        return {"error": 'missing "rounds" list'}
+    save_quiz_data(data)
+    return {"ok": True, "rounds": len(data["rounds"])}
+
+
+@app.post("/api/media")
+async def api_upload_media(question_id: str = "", file: UploadFile = None):
+    if not file:
+        return {"error": "no file"}
+    # Only image/audio allowed; sanitise the stored name.
+    ext = Path(file.filename or "").suffix.lower()
+    if ext not in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".mp3", ".ogg", ".wav"}:
+        return {"error": f"unsupported file type: {ext}"}
+    kind = ext in {".jpg", ".jpeg", ".png", ".webp", ".gif"} and "images" or "audio"
+    media_dir = STATIC_DIR / "media" / kind
+    media_dir.mkdir(parents=True, exist_ok=True)
+    safe_id = "".join(c for c in (question_id or "q") if c.isalnum() or c in "-_") or "q"
+    name = f"{safe_id}{ext}"
+    dest = media_dir / name
+    dest.write_bytes(await file.read())
+    return {"ok": True, "media": f"/media/{kind}/{name}"}
 
 
 # ---------------------------------------------------------------- host WS --

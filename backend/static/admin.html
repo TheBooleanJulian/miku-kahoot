@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIKU-19 — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050508; --panel: #0A0E14; --teal: #00D4C8; --gold: #F5C842;
+    --text: #E8ECF0; --dim: #6B7684; --danger: #FF5C7A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; background: var(--void); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid #1A2029; position: sticky; top: 0; background: var(--void); z-index: 10; }
+  header .brand { font-weight: 700; }
+  header .brand .teal { color: var(--teal); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .rounds { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .round-btn { background: var(--panel); border: 1px solid #1A2029; color: var(--text); padding: 0.7rem 1.2rem; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+  .round-btn.active { border-color: var(--teal); color: var(--teal); }
+  .round-btn .cnt { color: var(--dim); font-size: 0.8rem; }
+
+  .qcard { background: var(--panel); border: 1px solid #1A2029; border-radius: 12px; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .qcard .qhead { display: flex; align-items: center; gap: 0.8rem; }
+  .qcard .qhead .idx { color: var(--dim); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+  .qcard input[type=text], .qcard textarea, .qcard input[type=number] {
+    background: #07090D; border: 1px solid #1A2029; color: var(--text); border-radius: 8px;
+    padding: 0.6rem 0.8rem; font-family: inherit; font-size: 0.95rem; width: 100%;
+  }
+  .qcard input:focus, .qcard textarea:focus { outline: none; border-color: var(--teal); }
+  .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .opt { display: flex; align-items: center; gap: 0.6rem; }
+  .opt .shape { width: 22px; height: 22px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .opt input { flex: 1; }
+  .opt label.cb { display: flex; align-items: center; gap: 0.3rem; color: var(--dim); font-size: 0.85rem; cursor: pointer; }
+  .opt.correct input { border-color: var(--teal); }
+
+  .controls-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+  .field { display: flex; flex-direction: column; gap: 0.3rem; }
+  .field .lbl { font-size: 0.78rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .media-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+  .media-row img, .media-row audio { max-height: 80px; max-width: 220px; border-radius: 6px; }
+  .btn { background: var(--panel); border: 1px solid #1A2029; color: var(--text); padding: 0.5rem 0.9rem; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+  .btn:hover { border-color: var(--teal); }
+  .btn.ghost { background: transparent; }
+  .btn.danger:hover { border-color: var(--danger); color: var(--danger); }
+  .btn.accent { background: var(--teal); color: #00201D; border: none; font-weight: 700; }
+  .actions { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0 2rem; align-items: center; }
+  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--panel); border: 1px solid var(--teal); color: var(--text); padding: 0.8rem 1.2rem; border-radius: 10px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+  .toast.err { border-color: var(--danger); }
+  .spacer { flex: 1; }
+  .muted { color: var(--dim); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">MIKU-19 <span class="teal">/ Admin</span></div>
+  <button class="btn accent" onclick="saveAll()">Save All</button>
+</header>
+<div class="wrap" id="wrap"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SHAPES = ['▲', '◆', '●', '■'];
+let data = null;
+let currentRound = 0;
+
+const wrap = document.getElementById('wrap');
+const toast = document.getElementById('toast');
+
+function notify(msg, ok = true) {
+  toast.textContent = msg;
+  toast.className = 'toast show' + (ok ? '' : ' err');
+  setTimeout(() => toast.className = 'toast', 2200);
+}
+
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
+
+async function load() {
+  const res = await fetch('/api/questions');
+  data = await res.json();
+  if (!data.rounds || !data.rounds.length) data.rounds = [];
+  reorderToStart();
+  render();
+}
+
+function reorderToStart() {
+  const idx = data.rounds.findIndex(r => r.id !== 'set1');
+  if (idx > 0) {
+    const [set1] = data.rounds.splice(idx, 1);
+    data.rounds.unshift(set1);
+  }
+}
+
+function render() {
+  if (!data.rounds.length) { wrap.innerHTML = '<div class="qcard"><div class="muted">No rounds yet.</div></div>'; return; }
+  const r = data.rounds[currentRound] || (currentRound = 0, data.rounds[0]);
+  const roundBtns = data.rounds.map((rr, i) => `
+    <button class="round-btn ${i === currentRound ? 'active' : ''}" onclick="selectRound(${i})">
+      ${escapeHtml(rr.title)} <span class="cnt">${(rr.questions||[]).length} Q</span>
+    </button>`).join('');
+
+  const cards = (r.questions || []).map((q, qi) => renderCard(q, qi)).join('');
+
+  wrap.innerHTML = `
+    <div class="rounds">${roundBtns}</div>
+    <div class="muted">Round type: <span class="mono">${escapeHtml(r.type)}</span></div>
+    ${cards || '<div class="qcard"><div class="muted">No questions in this round yet.</div></div>'}
+    <button class="btn" onclick="addQuestion()">+ Add Question</button>
+    <div class="actions">
+      <button class="btn ghost" onclick="go(${indexOf('set1')}, '/' + 'host')">‹ Back</button>
+      <button class="btn accent" onclick="saveAll()">Save All</button>
+    </div>
+  `;
+}
+
+function indexOf(id) { return data.rounds.findIndex(r => r.id === id); }
+function go() { location.href = '/host'; }
+
+function renderCard(q, qi) {
+  const multi = Array.isArray(q.correct);
+  const correctSet = multi ? q.correct : [q.correct];
+  const r = data.rounds[currentRound];
+  const isImage = r.type === 'image';
+  const isAudio = r.type === 'audio';
+
+  const opts = (q.options || []).map((o, oi) => {
+    const isCorrect = correctSet.includes(oi);
+    return `
+      <div class="opt ${isCorrect ? 'correct' : ''}">
+        <span class="shape">${SHAPES[oi] || ''}</span>
+        <input type="text" value="${escapeHtml(o)}" oninput="setOpt(${qi}, ${oi}, this.value)">
+        <label class="cb"><input type="checkbox" ${isCorrect ? 'checked' : ''} onchange="toggleCorrect(${qi}, ${oi}, this.checked)"> correct</label>
+      </div>`;
+  }).join('');
+
+  let mediaHtml = '';
+  if (isImage || isAudio) {
+    const preview = q.media ? (isImage
+      ? `<img src="${escapeHtml(q.media)}" alt="">`
+      : `<audio controls src="${escapeHtml(q.media)}"></audio>`) : '';
+    mediaHtml = `
+      <div class="field">
+        <div class="lbl">${isImage ? 'Image' : 'Audio'}</div>
+        <div class="media-row">
+          ${preview}
+          <input type="file" accept="${isImage ? 'image/*' : 'audio/*'}" id="file-${qi}">
+          <button class="btn" onclick="uploadMedia(${qi})">Upload</button>
+          <span class="mono muted" id="mediapath-${qi}">${escapeHtml(q.media || '')}</span>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="qcard">
+      <div class="qhead">
+        <span class="idx">#${qi + 1}</span>
+        <button class="btn ghost" onclick="move(${qi}, -1)" ${qi === 0 ? 'disabled' : ''}>↑</button>
+        <button class="btn ghost" onclick="move(${qi}, 1)" ${qi >= (r.questions||[]).length - 1 ? 'disabled' : ''}>↓</button>
+        <span class="spacer"></span>
+        <button class="btn danger" onclick="removeQuestion(${qi})">Delete</button>
+      </div>
+      <input type="text" value="${escapeHtml(q.question)}" placeholder="Question" oninput="setField(${qi},'question',this.value)">
+      <div class="controls-row">
+        <div class="field">
+          <div class="lbl">Time limit (s)</div>
+          <input type="number" min="5" max="120" value="${q.time_limit || 20}" onchange="setField(${qi},'time_limit',parseInt(this.value)||20)" style="width:90px">
+        </div>
+        <label class="cb" style="color:var(--dim);font-size:0.85rem;display:flex;align-items:center;gap:0.3rem;cursor:pointer">
+          <input type="checkbox" ${multi ? 'checked' : ''} onchange="setMulti(${qi}, this.checked)"> Multi-select
+        </label>
+        <span class="spacer"></span>
+      </div>
+      <div class="opt-grid">${opts}</div>
+      ${mediaHtml}
+      <div class="field">
+        <div class="lbl">Explanation (shown on reveal)</div>
+        <textarea rows="2" placeholder="Optional" oninput="setField(${qi},'explanation',this.value)">${escapeHtml(q.explanation || '')}</textarea>
+      </div>
+    </div>`;
+}
+
+function selectRound(i) { currentRound = i; render(); }
+function r() { return data.rounds[currentRound]; }
+
+function setField(qi, key, val) {
+  const q = r().questions[qi];
+  if (key !== 'explanation' && key !== 'time_limit' && key !== 'question') q[key] = val;
+  q[key] = val;
+}
+
+function setOpt(qi, oi, val) { r().questions[qi].options[oi] = val; }
+
+function toggleCorrect(qi, oi, checked) {
+  const q = r().questions[qi];
+  const multi = Array.isArray(q.correct);
+  if (multi) {
+    const set = new Set(q.correct);
+    checked ? set.add(oi) : set.delete(oi);
+    q.correct = [...set].sort((a, b) => a - b);
+  } else {
+    if (checked) q.correct = oi;
+  }
+  render();
+}
+
+function setMulti(qi, checked) {
+  const q = r().questions[qi];
+  if (checked) {
+    q.correct = [q.correct].flat().filter(x => typeof x === 'number');
+  } else {
+    q.correct = (Array.isArray(q.correct) ? q.correct[0] : q.correct) ?? 0;
+  }
+  render();
+}
+
+function addQuestion() {
+  const n = (r().questions || []).length + 1;
+  r().questions = r().questions || [];
+  r().questions.push({ id: `${r().id}-${Date.now()}`, question: '', options: ['', '', '', ''], correct: 0, time_limit: 20, explanation: '' });
+  currentRound = data.rounds.findIndex(x => x.id === r().id);
+  render();
+}
+
+function removeQuestion(qi) { r().questions.splice(qi, 1); render(); }
+
+function move(qi, dir) {
+  const arr = r().questions;
+  const ni = qi + dir;
+  if (ni < 0 || ni >= arr.length) return;
+  [arr[qi], arr[ni]] = [arr[ni], arr[qi]];
+  render();
+}
+
+async function uploadMedia(qi) {
+  const q = r().questions[qi];
+  const input = document.getElementById('file-' + qi);
+  if (!input.files || !input.files[0]) { notify('Choose a file first', false); return; }
+  const fd = new FormData();
+  fd.append('file', input.files[0]);
+  const res = await fetch('/api/media?question_id=' + encodeURIComponent(q.id || 'q'), { method: 'POST', body: fd });
+  const out = await res.json();
+  if (!out.ok) { notify(out.error || 'Upload failed', false); return; }
+  q.media = out.media;
+  const mp = document.getElementById('mediapath-' + qi);
+  if (mp) mp.textContent = out.media;
+  render();
+  notify('Media uploaded');
+}
+
+async function saveAll() {
+  const res = await fetch('/api/questions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+  const out = await res.json();
+  if (out.error) { notify(out.error, false); return; }
+  notify('Saved — live game will pick up changes');
+}
+
+load();
+</script>
+</body>
+</html>
