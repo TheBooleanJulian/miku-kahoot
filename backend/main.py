@@ -20,7 +20,7 @@ from fastapi.staticfiles import StaticFiles
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 
-with open(BASE_DIR / "questions.json") as f:
+with open(BASE_DIR / "questions.json", encoding="utf-8") as f:
     QUIZ_DATA = json.load(f)
 
 app = FastAPI()
@@ -28,6 +28,23 @@ app.mount("/media", StaticFiles(directory=STATIC_DIR / "media"), name="media")
 
 BASE_POINTS = 1000
 MIN_POINTS = 100
+
+
+def is_multi(q):
+    return isinstance(q.get("correct"), (list, tuple))
+
+
+def correct_indices(q):
+    c = q.get("correct")
+    if isinstance(c, (list, tuple)):
+        return sorted(int(x) for x in c)
+    return [int(c)]
+
+
+def normalize_answer(option):
+    if isinstance(option, (list, tuple)):
+        return [int(x) for x in option]
+    return [int(option)] if option is not None else []
 
 
 def new_pin() -> str:
@@ -83,6 +100,7 @@ class Room:
             "options": q["options"],
             "time_limit": q["time_limit"],
             "media": q.get("media"),
+            "multi": is_multi(q),
         }
         return payload
 
@@ -213,22 +231,23 @@ async def handle_host_message(room: Room, msg: dict):
         # tally per-option counts
         counts = [0] * len(q["options"])
         for a in room.answers.values():
-            if 0 <= a["option"] < len(counts):
-                counts[a["option"]] += 1
+            for o in normalize_answer(a["option"]):
+                if 0 <= o < len(counts):
+                    counts[o] += 1
         await broadcast_all(room, {
             "type": "reveal",
-            "correct": q["correct"],
+            "correct": correct_indices(q),
             "counts": counts,
             "board": room.leaderboard(),
         })
         # tell each player their own result
         for p in room.players.values():
             a = room.answers.get(p.id)
-            got_it = bool(a and a["option"] == q["correct"])
+            got_it = bool(a and sorted(normalize_answer(a["option"])) == correct_indices(q))
             await safe_send(p.ws, {
                 "type": "your_result",
                 "correct": got_it,
-                "correct_option": q["correct"],
+                "correct_option": correct_indices(q),
                 "score": p.score,
                 "streak": p.streak,
             })
@@ -304,7 +323,8 @@ async def handle_player_message(room: Room, player: Player, msg: dict):
 
     room.answers[player.id] = {"option": option, "t": elapsed}
 
-    correct = option == q["correct"]
+    picked = normalize_answer(option)
+    correct = sorted(picked) == correct_indices(q)
     if correct:
         frac = max(0.0, min(1.0, 1 - (elapsed / time_limit)))
         points = int(MIN_POINTS + (BASE_POINTS - MIN_POINTS) * frac)

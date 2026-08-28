@@ -219,15 +219,17 @@ function revealAnswer() { ws.send(JSON.stringify({ action: 'reveal' })); }
 
 function renderReveal(msg) {
   const total = msg.counts.reduce((a, b) => a + b, 0) || 1;
+  const correct = [].concat(msg.correct);
   const bars = msg.counts.map((c, i) => `
-    <div class="bar-row ${i === msg.correct ? 'correct' : ''}">
+    <div class="bar-row ${correct.includes(i) ? 'correct' : ''}">
       <div class="label">${SHAPES[i]}</div>
       <div class="track"><div class="fill" style="width:${(c/total*100)}%">${c}</div></div>
     </div>
   `).join('');
+  const label = correct.length > 1 ? 'Correct answers' : 'Correct answer';
   render(`
     <div class="reveal">
-      <div class="correct-answer">Correct answer: ${SHAPES[msg.correct]}</div>
+      <div class="correct-answer">${label}: ${correct.map(c => SHAPES[c]).join(' ')}</div>
       <div class="bars">${bars}</div>
     </div>
     <div class="controls"><button class="ctl" onclick="showLeaderboard()">Leaderboard →</button></div>

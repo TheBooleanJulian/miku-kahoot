@@ -2,13 +2,184 @@
   "event": "MIKU-19 Birthday Quiz",
   "rounds": [
     {
+      "id": "set1",
+      "title": "Set 1 — Miku Trivia",
+      "type": "text",
+      "questions": [
+        {
+          "id": "set1-1",
+          "question": "When was Hatsune Miku's original Japanese VOCALOID2 voicebank released?",
+          "options": [
+            "2008",
+            "2007",
+            "2006",
+            "2010"
+          ],
+          "correct": 1,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-2",
+          "question": "Which date is specifically associated with Miku's original voicebank release anniversary?",
+          "options": [
+            "March 9",
+            "September 1",
+            "August 31",
+            "July 31"
+          ],
+          "correct": 2,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-3",
+          "question": "Which pair consists entirely of Crypton Future Media's Piapro Characters?",
+          "options": [
+            "GUMI and Megurine Luka",
+            "Kasane Teto and Kagamine Rin",
+            "IA and KAITO",
+            "Kagamine Len and MEIKO"
+          ],
+          "correct": 3,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-4",
+          "question": "Who produced the original “World is Mine”?",
+          "options": [
+            "kz (livetune)",
+            "ryo (supercell)",
+            "DECO*27",
+            "wowaka"
+          ],
+          "correct": 1,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-5",
+          "question": "Which producer is associated with “Tell Your World”?",
+          "options": [
+            "Mitchie M",
+            "wowaka",
+            "kz (livetune)",
+            "ryo (supercell)"
+          ],
+          "correct": 2,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-6",
+          "question": "Which song was created by wowaka?",
+          "options": [
+            "Rolling Girl",
+            "Ghost Rule",
+            "Freely Tomorrow",
+            "The Disappearance of Hatsune Miku"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-7",
+          "question": "Which description of Project SEKAI is most accurate?",
+          "options": [
+            "A Miku-focused successor to Project DIVA",
+            "A voice-synthesis engine developed by Crypton",
+            "A rhythm/adventure game combining original characters with Virtual Singers",
+            "A concert platform for projecting Miku onto a screen"
+          ],
+          "correct": 2,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-8",
+          "question": "Which statement about Kasane Teto is correct?",
+          "options": [
+            "She was originally created by Crypton as Miku's counterpart",
+            "She debuted as a Yamaha VOCALOID2 voicebank in 2008",
+            "She originated as an April Fools character and later became an UTAU voicebank",
+            "She was created specifically for Project SEKAI"
+          ],
+          "correct": 2,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-9",
+          "question": "Which song became a major Miku/Teto crossover phenomenon in the 2020s?",
+          "options": [
+            "Lagtrain",
+            "Mesmerizer",
+            "Hibikase",
+            "Senbonzakura"
+          ],
+          "correct": 1,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-10",
+          "question": "Which song is most strongly associated with inabakumori?",
+          "options": [
+            "Bug",
+            "Lagtrain",
+            "Hibikase",
+            "Phony"
+          ],
+          "correct": 1,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-11",
+          "question": "Which song/producer pairing is correct?",
+          "options": [
+            "Melt — DECO*27",
+            "Ghost Rule — ryo",
+            "The Disappearance of Hatsune Miku — cosMo@BousouP",
+            "World is Mine — wowaka"
+          ],
+          "correct": 2,
+          "time_limit": 20
+        },
+        {
+          "id": "set1-12",
+          "question": "Which THREE statements about Kasane Teto are correct?",
+          "options": [
+            "She has an UTAU voicebank",
+            "She is an official Crypton Piapro Character",
+            "She later received a Synthesizer V AI voice",
+            "She originated as an April Fools project"
+          ],
+          "correct": [
+            0,
+            2,
+            3
+          ],
+          "time_limit": 30
+        },
+        {
+          "id": "set1-13",
+          "question": "Which THREE song/producer pairings are correct?",
+          "options": [
+            "Ghost Rule — DECO*27",
+            "Rolling Girl — Mitchie M",
+            "Melt — ryo",
+            "Tell Your World — kz (livetune)"
+          ],
+          "correct": [
+            0,
+            2,
+            3
+          ],
+          "time_limit": 30
+        }
+      ]
+    },
+    {
       "id": "general",
       "title": "General Trivia",
       "type": "text",
       "questions": [
         {
           "id": "general-1",
-          "question": "PLACEHOLDER General Trivia question 1 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 1 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -20,7 +191,7 @@
         },
         {
           "id": "general-2",
-          "question": "PLACEHOLDER General Trivia question 2 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 2 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -32,7 +203,7 @@
         },
         {
           "id": "general-3",
-          "question": "PLACEHOLDER General Trivia question 3 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 3 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -44,7 +215,7 @@
         },
         {
           "id": "general-4",
-          "question": "PLACEHOLDER General Trivia question 4 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 4 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -56,7 +227,7 @@
         },
         {
           "id": "general-5",
-          "question": "PLACEHOLDER General Trivia question 5 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 5 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -68,7 +239,7 @@
         },
         {
           "id": "general-6",
-          "question": "PLACEHOLDER General Trivia question 6 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 6 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -80,7 +251,7 @@
         },
         {
           "id": "general-7",
-          "question": "PLACEHOLDER General Trivia question 7 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 7 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -92,7 +263,7 @@
         },
         {
           "id": "general-8",
-          "question": "PLACEHOLDER General Trivia question 8 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 8 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -104,7 +275,7 @@
         },
         {
           "id": "general-9",
-          "question": "PLACEHOLDER General Trivia question 9 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 9 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -116,7 +287,7 @@
         },
         {
           "id": "general-10",
-          "question": "PLACEHOLDER General Trivia question 10 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 10 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -128,7 +299,7 @@
         },
         {
           "id": "general-11",
-          "question": "PLACEHOLDER General Trivia question 11 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 11 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -140,7 +311,7 @@
         },
         {
           "id": "general-12",
-          "question": "PLACEHOLDER General Trivia question 12 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 12 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -152,7 +323,7 @@
         },
         {
           "id": "general-13",
-          "question": "PLACEHOLDER General Trivia question 13 \u2014 replace with real content",
+          "question": "PLACEHOLDER General Trivia question 13 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -171,7 +342,7 @@
       "questions": [
         {
           "id": "module-1",
-          "question": "PLACEHOLDER Guess the Module question 1 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 1 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -184,7 +355,7 @@
         },
         {
           "id": "module-2",
-          "question": "PLACEHOLDER Guess the Module question 2 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 2 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -197,7 +368,7 @@
         },
         {
           "id": "module-3",
-          "question": "PLACEHOLDER Guess the Module question 3 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 3 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -210,7 +381,7 @@
         },
         {
           "id": "module-4",
-          "question": "PLACEHOLDER Guess the Module question 4 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 4 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -223,7 +394,7 @@
         },
         {
           "id": "module-5",
-          "question": "PLACEHOLDER Guess the Module question 5 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 5 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -236,7 +407,7 @@
         },
         {
           "id": "module-6",
-          "question": "PLACEHOLDER Guess the Module question 6 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 6 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -249,7 +420,7 @@
         },
         {
           "id": "module-7",
-          "question": "PLACEHOLDER Guess the Module question 7 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 7 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -262,7 +433,7 @@
         },
         {
           "id": "module-8",
-          "question": "PLACEHOLDER Guess the Module question 8 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 8 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -275,7 +446,7 @@
         },
         {
           "id": "module-9",
-          "question": "PLACEHOLDER Guess the Module question 9 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 9 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -288,7 +459,7 @@
         },
         {
           "id": "module-10",
-          "question": "PLACEHOLDER Guess the Module question 10 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 10 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -301,7 +472,7 @@
         },
         {
           "id": "module-11",
-          "question": "PLACEHOLDER Guess the Module question 11 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 11 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -314,7 +485,7 @@
         },
         {
           "id": "module-12",
-          "question": "PLACEHOLDER Guess the Module question 12 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 12 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -327,7 +498,7 @@
         },
         {
           "id": "module-13",
-          "question": "PLACEHOLDER Guess the Module question 13 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Module question 13 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -347,7 +518,7 @@
       "questions": [
         {
           "id": "song-1",
-          "question": "PLACEHOLDER Guess the Song question 1 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 1 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -360,7 +531,7 @@
         },
         {
           "id": "song-2",
-          "question": "PLACEHOLDER Guess the Song question 2 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 2 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -373,7 +544,7 @@
         },
         {
           "id": "song-3",
-          "question": "PLACEHOLDER Guess the Song question 3 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 3 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -386,7 +557,7 @@
         },
         {
           "id": "song-4",
-          "question": "PLACEHOLDER Guess the Song question 4 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 4 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -399,7 +570,7 @@
         },
         {
           "id": "song-5",
-          "question": "PLACEHOLDER Guess the Song question 5 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 5 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -412,7 +583,7 @@
         },
         {
           "id": "song-6",
-          "question": "PLACEHOLDER Guess the Song question 6 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 6 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -425,7 +596,7 @@
         },
         {
           "id": "song-7",
-          "question": "PLACEHOLDER Guess the Song question 7 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 7 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -438,7 +609,7 @@
         },
         {
           "id": "song-8",
-          "question": "PLACEHOLDER Guess the Song question 8 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 8 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -451,7 +622,7 @@
         },
         {
           "id": "song-9",
-          "question": "PLACEHOLDER Guess the Song question 9 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 9 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -464,7 +635,7 @@
         },
         {
           "id": "song-10",
-          "question": "PLACEHOLDER Guess the Song question 10 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 10 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -477,7 +648,7 @@
         },
         {
           "id": "song-11",
-          "question": "PLACEHOLDER Guess the Song question 11 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 11 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -490,7 +661,7 @@
         },
         {
           "id": "song-12",
-          "question": "PLACEHOLDER Guess the Song question 12 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 12 — replace with real content",
           "options": [
             "Option A",
             "Option B",
@@ -503,7 +674,7 @@
         },
         {
           "id": "song-13",
-          "question": "PLACEHOLDER Guess the Song question 13 \u2014 replace with real content",
+          "question": "PLACEHOLDER Guess the Song question 13 — replace with real content",
           "options": [
             "Option A",
             "Option B",
