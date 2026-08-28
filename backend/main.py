@@ -119,6 +119,11 @@ ROOMS: dict[str, Room] = {}
 
 @app.get("/")
 async def root():
+    return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/host")
+async def host():
     return FileResponse(STATIC_DIR / "host.html")
 
 

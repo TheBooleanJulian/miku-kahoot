@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIKU-19 Live Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050508;
+    --panel: #0A0E14;
+    --teal: #00D4C8;
+    --gold: #F5C842;
+    --text: #E8ECF0;
+    --dim: #6B7684;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; padding: 2rem; text-align: center; }
+  .logo { font-size: 4rem; font-weight: 700; letter-spacing: 0.02em; }
+  .logo .miku { color: var(--teal); text-shadow: 0 0 40px rgba(0,212,200,0.4); }
+  .logo .live { color: var(--gold); }
+  .tagline { color: var(--dim); font-size: 1.2rem; max-width: 560px; line-height: 1.6; }
+  .cards { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .card {
+    background: var(--panel); border: 1px solid #1A2029; border-radius: 16px;
+    padding: 2rem 2.5rem; width: 300px; display: flex; flex-direction: column;
+    gap: 0.6rem; text-decoration: none; color: var(--text); transition: 0.15s;
+  }
+  .card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,212,200,0.15); }
+  .card .icon { font-size: 2.4rem; }
+  .card .title { font-weight: 700; font-size: 1.4rem; }
+  .card .desc { color: var(--dim); font-size: 0.95rem; line-height: 1.5; }
+  .card.host .title { color: var(--teal); }
+  .card.player .title { color: var(--gold); }
+  .footer { color: var(--dim); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <div class="logo"><span class="miku">MIKU-19</span> <span class="live">Live Quiz</span></div>
+    <div class="tagline">Kahoot-style live quiz with no player cap. Three rounds:
+      general trivia, guess the module, and guess the song.</div>
+  </div>
+  <div class="cards">
+    <a class="card host" href="/host">
+      <div class="icon">🖥️</div>
+      <div class="title">Host Screen</div>
+      <div class="desc">Put this on the projector or TV. Opens a room, generates the PIN, and drives the whole game.</div>
+    </a>
+    <a class="card player" href="/play">
+      <div class="icon">📱</div>
+      <div class="title">Player Screen</div>
+      <div class="desc">Share this with players. They join with the PIN and a nickname to play along.</div>
+    </a>
+  </div>
+  <div class="footer mono">miku-19 · single room · in-memory · no player cap</div>
+</div>
+</body>
+</html>
