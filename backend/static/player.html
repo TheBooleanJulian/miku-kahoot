@@ -68,6 +68,15 @@
   .lb-name { flex: 1; font-weight: 700; text-align: left; }
   .lb-score { font-family: 'JetBrains Mono', monospace; color: var(--teal); }
   .lb-row.me { border: 1px solid var(--gold); }
+
+  .podium { display: flex; align-items: flex-end; justify-content: center; gap: 0.8rem; width: 100%; max-width: 420px; margin-top: 0.5rem; }
+  .pod-col { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; }
+  .pod-name { font-weight: 700; font-size: 0.9rem; max-width: 100%; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pod-score { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+  .pod-block { width: 100%; border-radius: 10px 10px 0 0; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: #050508; }
+  .pod-1 .pod-block { height: 120px; background: var(--gold); }
+  .pod-2 .pod-block { height: 90px; background: #C7D0D9; }
+  .pod-3 .pod-block { height: 70px; background: #C88A4B; }
 </style>
 </head>
 <body>
@@ -121,7 +130,7 @@ function handleMessage(msg) {
   else if (msg.type === 'answer_received') { markAnswered(msg.option); }
   else if (msg.type === 'your_result') { renderResult(msg); }
   else if (msg.type === 'leaderboard') { renderLeaderboard(msg); }
-  else if (msg.type === 'final') { renderLeaderboard({ board: msg.board }, true); }
+  else if (msg.type === 'final') { renderPodium(msg.board || []); }
   else if (msg.type === 'kicked' || msg.type === 'host_left') { renderJoin('Removed from game.'); }
 }
 
@@ -240,6 +249,30 @@ function renderLeaderboard(msg, isFinal) {
       ${isFinal ? '<div class="dim">Thanks for playing!</div>' : '<div class="dim">Waiting for next question…</div>'}
     </div>
   `);
+}
+
+function renderPodium(board) {
+  const cols = [];
+  if (board[1]) cols.push(podCol(board[1], 2));
+  if (board[0]) cols.push(podCol(board[0], 1));
+  if (board[2]) cols.push(podCol(board[2], 3));
+  const podiumHtml = cols.length ? `<div class="podium">${cols.join('')}</div>` : '<div class="dim">No players joined</div>';
+  render(`
+    <div class="screen">
+      <h1>🏆 Final Results 🏆</h1>
+      ${podiumHtml}
+      <div class="dim">Thanks for playing!</div>
+    </div>
+    <div class="site-footer mono">Built by TheBooleanJulian</div>
+  `);
+}
+
+function podCol(p, place) {
+  return `<div class="pod-col pod-${place}">
+    <div class="pod-name">${escapeHtml(p.name)}</div>
+    <div class="pod-score">${p.score}</div>
+    <div class="pod-block">${place}</div>
+  </div>`;
 }
 
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
