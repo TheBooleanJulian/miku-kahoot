@@ -16,7 +16,8 @@
             "2010"
           ],
           "correct": 1,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": ""
         },
         {
           "id": "set1-2",
@@ -28,7 +29,8 @@
             "July 31"
           ],
           "correct": 2,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "March 9 is Miku Day, but it is not the original voicebank's release date."
         },
         {
           "id": "set1-3",
@@ -40,7 +42,8 @@
             "Kagamine Len and MEIKO"
           ],
           "correct": 3,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "All four are real Vocaloid/virtual-singer characters, but only the selected pair are both Crypton Piapro Characters."
         },
         {
           "id": "set1-4",
@@ -52,7 +55,8 @@
             "wowaka"
           ],
           "correct": 1,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": ""
         },
         {
           "id": "set1-5",
@@ -64,7 +68,8 @@
             "ryo (supercell)"
           ],
           "correct": 2,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "All four options are major producers associated with Miku, making this a recognition question rather than an elimination question."
         },
         {
           "id": "set1-6",
@@ -76,7 +81,8 @@
             "The Disappearance of Hatsune Miku"
           ],
           "correct": 0,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": ""
         },
         {
           "id": "set1-7",
@@ -88,7 +94,8 @@
             "A concert platform for projecting Miku onto a screen"
           ],
           "correct": 2,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "Project SEKAI combines original human characters with Virtual Singer versions of Miku and the other Crypton characters."
         },
         {
           "id": "set1-8",
@@ -100,7 +107,8 @@
             "She was created specifically for Project SEKAI"
           ],
           "correct": 2,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "Teto originated in 2008 and subsequently became an actual singing-synthesis character through UTAU and later other synthesis platforms."
         },
         {
           "id": "set1-9",
@@ -112,7 +120,8 @@
             "Senbonzakura"
           ],
           "correct": 1,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "“Mesmerizer” features both Hatsune Miku and Kasane Teto and was released by 32ki in 2024."
         },
         {
           "id": "set1-10",
@@ -124,7 +133,8 @@
             "Phony"
           ],
           "correct": 1,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "This is deliberately harder than asking for a famous Miku song: “Lagtrain” is strongly associated with inabakumori but features Kaai Yuki rather than Miku."
         },
         {
           "id": "set1-11",
@@ -136,7 +146,8 @@
             "World is Mine — wowaka"
           ],
           "correct": 2,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "All four producers are genuine major Vocaloid names; only the pairing is correct."
         },
         {
           "id": "set1-12",
@@ -152,7 +163,8 @@
             2,
             3
           ],
-          "time_limit": 30
+          "time_limit": 30,
+          "explanation": "Teto's official chronology records her April 2008 debut and subsequent UTAU development; she later expanded into newer synthesis platforms."
         },
         {
           "id": "set1-13",
@@ -168,7 +180,8 @@
             2,
             3
           ],
-          "time_limit": 30
+          "time_limit": 30,
+          "explanation": "This is intended to separate fans who recognise song titles from fans who actually know the producer catalogue."
         }
       ]
     },

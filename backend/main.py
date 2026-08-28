@@ -135,19 +135,27 @@ async def safe_send(ws: WebSocket, data: dict):
 ROOMS: dict[str, Room] = {}
 
 
+def nocache(path):
+    resp = FileResponse(path)
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    return resp
+
+
 @app.get("/")
 async def root():
-    return FileResponse(STATIC_DIR / "index.html")
+    return nocache(STATIC_DIR / "index.html")
 
 
 @app.get("/host")
 async def host():
-    return FileResponse(STATIC_DIR / "host.html")
+    return nocache(STATIC_DIR / "host.html")
 
 
 @app.get("/play")
 async def play():
-    return FileResponse(STATIC_DIR / "player.html")
+    return nocache(STATIC_DIR / "player.html")
 
 
 @app.get("/api/rounds")
@@ -239,6 +247,9 @@ async def handle_host_message(room: Room, msg: dict):
             "correct": correct_indices(q),
             "counts": counts,
             "board": room.leaderboard(),
+            "question": q["question"],
+            "options": q["options"],
+            "explanation": q.get("explanation", ""),
         })
         # tell each player their own result
         for p in room.players.values():
@@ -249,7 +260,10 @@ async def handle_host_message(room: Room, msg: dict):
                 "correct": got_it,
                 "correct_option": correct_indices(q),
                 "score": p.score,
+                "points_added": (a or {}).get("points", 0),
                 "streak": p.streak,
+                "options": q["options"],
+                "explanation": q.get("explanation", ""),
             })
 
     elif action == "show_leaderboard":
@@ -325,6 +339,7 @@ async def handle_player_message(room: Room, player: Player, msg: dict):
 
     picked = normalize_answer(option)
     correct = sorted(picked) == correct_indices(q)
+    points = 0
     if correct:
         frac = max(0.0, min(1.0, 1 - (elapsed / time_limit)))
         points = int(MIN_POINTS + (BASE_POINTS - MIN_POINTS) * frac)
@@ -334,6 +349,8 @@ async def handle_player_message(room: Room, player: Player, msg: dict):
         player.score += points
     else:
         player.streak = 0
+
+    room.answers[player.id]["points"] = points
 
     await safe_send(player.ws, {"type": "answer_received", "option": option})
     await room.broadcast_answer_count()

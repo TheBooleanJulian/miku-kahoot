@@ -77,7 +77,8 @@
 
   /* ---------- Reveal ---------- */
   .reveal { flex: 1; display: flex; flex-direction: column; padding: 2rem 3rem; gap: 1.5rem; justify-content: center; }
-  .reveal .correct-answer { text-align: center; color: var(--teal); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+  .reveal .correct-answer { text-align: center; color: var(--teal); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .reveal .explanation { text-align: center; color: var(--dim); font-size: 1.1rem; max-width: 720px; margin: 0 auto; line-height: 1.5; }
   .bars { display: flex; flex-direction: column; gap: 0.9rem; max-width: 700px; margin: 0 auto; width: 100%; }
   .bar-row { display: flex; align-items: center; gap: 1rem; }
   .bar-row .label { width: 32px; text-align: center; font-weight: 700; }
@@ -227,9 +228,12 @@ function renderReveal(msg) {
     </div>
   `).join('');
   const label = correct.length > 1 ? 'Correct answers' : 'Correct answer';
+  const answers = correct.map(c => `${SHAPES[c]} ${escapeHtml(msg.options[c])}`).join('  ·  ');
+  const expl = msg.explanation ? `<div class="explanation">${escapeHtml(msg.explanation)}</div>` : '';
   render(`
     <div class="reveal">
-      <div class="correct-answer">${label}: ${correct.map(c => SHAPES[c]).join(' ')}</div>
+      <div class="correct-answer">${label}: ${answers}</div>
+      ${expl}
       <div class="bars">${bars}</div>
     </div>
     <div class="controls"><button class="ctl" onclick="showLeaderboard()">Leaderboard →</button></div>

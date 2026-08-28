@@ -210,14 +210,18 @@ function renderResult(msg) {
   const cls = msg.correct ? 'result-correct' : 'result-wrong';
   const icon = msg.correct ? '✓' : '✕';
   const answers = [].concat(msg.correct_option);
-  const answerLabel = answers.map(c => SHAPES[c]).join(' ');
+  const answerText = answers.map(c => `${SHAPES[c]} ${escapeHtml((msg.options||[])[c] || '')}`).join(' · ');
+  const pts = msg.points_added ? `<div class="points">+${msg.points_added}</div>` : '';
+  const streak = msg.streak >= 3 ? `<div class="streak">🔥 ${msg.streak} in a row</div>` : '';
+  const explain = msg.explanation ? `<div class="streak" style="max-width:340px;line-height:1.5">${escapeHtml(msg.explanation)}</div>` : '';
   render(`
     <div class="score-tag mono">${myScore}</div>
     <div class="screen">
       <div class="result-icon ${cls}">${icon}</div>
       <h1>${msg.correct ? 'Correct!' : 'Not quite'}</h1>
-      ${msg.correct ? `<div class="points">+ points added</div>` : `<div class="dim">${answers.length > 1 ? 'Correct answers' : 'Correct answer'}: ${answerLabel}</div>`}
-      ${msg.streak >= 3 ? `<div class="streak">🔥 ${msg.streak} in a row</div>` : ''}
+      ${msg.correct ? pts : `<div class="dim">${answers.length > 1 ? 'Correct answers' : 'Correct answer'}: ${answerText}</div>`}
+      ${streak}
+      ${explain}
       <div class="dim">Waiting for the host…</div>
     </div>
   `);
