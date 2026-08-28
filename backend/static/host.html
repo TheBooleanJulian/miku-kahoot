@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIKU-19 — Host</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050508;
+    --panel: #0A0E14;
+    --teal: #00D4C8;
+    --gold: #F5C842;
+    --text: #E8ECF0;
+    --dim: #6B7684;
+    --danger: #FF5C7A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow: hidden;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  #app { height: 100vh; display: flex; flex-direction: column; }
+
+  /* ---------- Lobby ---------- */
+  .lobby { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
+  .pin-label { color: var(--dim); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.85rem; }
+  .pin { font-family: 'JetBrains Mono', monospace; font-size: 6rem; font-weight: 700; color: var(--teal); letter-spacing: 0.15em; text-shadow: 0 0 40px rgba(0,212,200,0.35); }
+  .join-hint { color: var(--dim); font-size: 1.1rem; }
+  .player-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; max-width: 900px; justify-content: center; }
+  .chip { background: var(--panel); border: 1px solid #1A2029; color: var(--text); padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.95rem; }
+  .player-count { color: var(--gold); font-weight: 700; font-size: 1.3rem; }
+  .round-picker { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+  .round-btn {
+    background: var(--panel); border: 1px solid #1A2029; color: var(--text);
+    padding: 1rem 1.6rem; border-radius: 12px; cursor: pointer; font-family: inherit;
+    font-size: 1rem; transition: 0.15s; text-align: left; min-width: 180px;
+  }
+  .round-btn:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .round-btn .rt { color: var(--dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .round-btn .rn { font-weight: 700; font-size: 1.15rem; margin-top: 0.2rem; }
+
+  /* ---------- Round intro ---------- */
+  .intro { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+  .intro .rt { color: var(--gold); text-transform: uppercase; letter-spacing: 0.3em; font-size: 1rem; }
+  .intro .rn { font-size: 4rem; font-weight: 700; }
+  .intro .rc { color: var(--dim); font-size: 1.2rem; }
+
+  /* ---------- Question ---------- */
+  .qview { flex: 1; display: flex; flex-direction: column; padding: 2rem 3rem; gap: 1.5rem; }
+  .qbar { display: flex; justify-content: space-between; align-items: center; }
+  .qmeta { color: var(--dim); font-size: 1rem; }
+  .timer-wrap { flex: 1; margin: 0 2rem; height: 14px; background: var(--panel); border-radius: 999px; overflow: hidden; }
+  .timer-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); width: 100%; transition: width 0.1s linear; }
+  .answered { color: var(--teal); font-weight: 700; font-size: 1.1rem; }
+  .qtext { font-size: 2.4rem; font-weight: 700; text-align: center; line-height: 1.3; }
+  .media-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+  .media-wrap img { max-height: 100%; max-width: 100%; border-radius: 16px; border: 2px solid #1A2029; object-fit: contain; }
+  .audio-vis { display: flex; align-items: center; justify-content: center; gap: 0.4rem; height: 100%; }
+  .audio-vis .bar { width: 10px; background: var(--teal); border-radius: 4px; animation: pulse 0.9s ease-in-out infinite; }
+  .audio-vis .bar:nth-child(2){animation-delay:0.1s} .audio-vis .bar:nth-child(3){animation-delay:0.2s}
+  .audio-vis .bar:nth-child(4){animation-delay:0.3s} .audio-vis .bar:nth-child(5){animation-delay:0.4s}
+  .audio-vis .bar:nth-child(6){animation-delay:0.15s} .audio-vis .bar:nth-child(7){animation-delay:0.25s}
+  @keyframes pulse { 0%,100% { height: 20px; } 50% { height: 90px; } }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .opt { border-radius: 12px; padding: 1.2rem 1.5rem; font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 0.8rem; }
+  .opt .shape { width: 28px; height: 28px; flex-shrink: 0; }
+  .opt.o0 { background: #C0392B22; border: 2px solid #C0392B; }
+  .opt.o1 { background: #2980B922; border: 2px solid #2980B9; }
+  .opt.o2 { background: #F39C1222; border: 2px solid #F39C12; }
+  .opt.o3 { background: #27AE6022; border: 2px solid #27AE60; }
+
+  /* ---------- Reveal ---------- */
+  .reveal { flex: 1; display: flex; flex-direction: column; padding: 2rem 3rem; gap: 1.5rem; justify-content: center; }
+  .reveal .correct-answer { text-align: center; color: var(--teal); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+  .bars { display: flex; flex-direction: column; gap: 0.9rem; max-width: 700px; margin: 0 auto; width: 100%; }
+  .bar-row { display: flex; align-items: center; gap: 1rem; }
+  .bar-row .label { width: 32px; text-align: center; font-weight: 700; }
+  .bar-row .track { flex: 1; height: 32px; background: var(--panel); border-radius: 8px; overflow: hidden; }
+  .bar-row .fill { height: 100%; background: var(--dim); transition: width 0.6s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.6rem; font-family: 'JetBrains Mono', monospace; }
+  .bar-row.correct .fill { background: var(--teal); color: #00201D; }
+
+  /* ---------- Leaderboard ---------- */
+  .leaderboard { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; padding: 2rem; }
+  .lb-title { color: var(--gold); text-transform: uppercase; letter-spacing: 0.25em; font-size: 1rem; margin-bottom: 1rem; }
+  .lb-row { display: flex; align-items: center; gap: 1.2rem; width: 500px; max-width: 90vw; background: var(--panel); border-radius: 10px; padding: 0.8rem 1.2rem; }
+  .lb-rank { font-family: 'JetBrains Mono', monospace; color: var(--dim); width: 2rem; }
+  .lb-name { flex: 1; font-weight: 700; }
+  .lb-score { font-family: 'JetBrains Mono', monospace; color: var(--teal); }
+  .lb-row:nth-child(1) .lb-rank { color: var(--gold); }
+
+  /* ---------- Controls ---------- */
+  .controls { display: flex; justify-content: center; gap: 1rem; padding: 1.5rem; }
+  button.ctl {
+    background: var(--teal); color: #00201D; border: none; padding: 0.9rem 2rem;
+    border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 1.05rem;
+    cursor: pointer; transition: 0.15s;
+  }
+  button.ctl:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.3); }
+  button.ctl.secondary { background: transparent; color: var(--text); border: 1px solid #1A2029; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const app = document.getElementById('app');
+let ws;
+let state = { screen: 'lobby', pin: null, players: [], rounds: [], currentPayload: null, timer: null, timeLeft: 0, timeLimit: 0 };
+
+async function loadRounds() {
+  const res = await fetch('/api/rounds');
+  state.rounds = await res.json();
+}
+
+function connect() {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(`${proto}://${location.host}/ws/host`);
+  ws.onmessage = (ev) => handleMessage(JSON.parse(ev.data));
+  ws.onclose = () => { if (state.screen !== 'ended') render('<div class="lobby"><div class="pin-label">Connection lost</div></div>'); };
+}
+
+function handleMessage(msg) {
+  if (msg.type === 'room_created') { state.pin = msg.pin; renderLobby(); }
+  else if (msg.type === 'players_update') { state.players = msg.players; if (state.screen === 'lobby') renderLobby(); }
+  else if (msg.type === 'round_intro') { state.screen = 'intro'; renderIntro(msg); }
+  else if (msg.type === 'question') { state.screen = 'question'; renderQuestion(msg); }
+  else if (msg.type === 'answer_count') { updateAnsweredCount(msg); }
+  else if (msg.type === 'reveal') { state.screen = 'reveal'; clearInterval(state.timer); renderReveal(msg); }
+  else if (msg.type === 'leaderboard') { state.screen = 'leaderboard'; renderLeaderboard(msg); }
+  else if (msg.type === 'final') { state.screen = 'ended'; renderFinal(msg); }
+}
+
+function render(html) { app.innerHTML = html; }
+
+function renderLobby() {
+  const roundButtons = state.rounds.map((r, i) =>
+    `<button class="round-btn" onclick="startRound(${i})">
+      <div class="rt">${r.type} · ${r.count} Q</div>
+      <div class="rn">${r.title}</div>
+    </button>`).join('');
+  render(`
+    <div class="lobby">
+      <div class="pin-label">Join at yourdomain.com/play — Game PIN</div>
+      <div class="pin mono">${state.pin || '------'}</div>
+      <div class="join-hint"><span class="player-count">${state.players.length}</span> player${state.players.length===1?'':'s'} joined</div>
+      <div class="player-grid">${state.players.map(p => `<div class="chip">${escapeHtml(p.name)}</div>`).join('')}</div>
+      <div class="round-picker">${roundButtons}</div>
+    </div>
+  `);
+}
+
+function startRound(idx) { ws.send(JSON.stringify({ action: 'start_round', round_index: idx })); }
+
+function renderIntro(msg) {
+  render(`
+    <div class="intro">
+      <div class="rt">Round ${msg.round_index + 1}</div>
+      <div class="rn">${msg.round_title}</div>
+      <div class="rc">${msg.question_count} questions</div>
+    </div>
+    <div class="controls"><button class="ctl" onclick="nextQuestion()">Start Round →</button></div>
+  `);
+}
+
+function nextQuestion() { ws.send(JSON.stringify({ action: 'next_question' })); }
+
+const SHAPES = ['▲', '◆', '●', '■'];
+
+function renderQuestion(msg) {
+  state.timeLimit = msg.time_limit;
+  state.timeLeft = msg.time_limit;
+  clearInterval(state.timer);
+
+  let mediaHtml = '';
+  if (msg.round_type === 'image' && msg.media) {
+    mediaHtml = `<div class="media-wrap"><img src="${msg.media}" alt=""></div>`;
+  } else if (msg.round_type === 'audio' && msg.media) {
+    mediaHtml = `<div class="media-wrap"><audio id="clip" src="${msg.media}" autoplay></audio>
+      <div class="audio-vis">${Array.from({length:7}).map(()=>'<div class="bar"></div>').join('')}</div></div>`;
+  }
+
+  const opts = msg.options.map((o, i) => `<div class="opt o${i}"><span class="shape">${SHAPES[i]}</span>${escapeHtml(o)}</div>`).join('');
+
+  render(`
+    <div class="qview">
+      <div class="qbar">
+        <div class="qmeta">${msg.round_title} · Q${msg.question_index + 1}/${msg.question_count}</div>
+        <div class="timer-wrap"><div class="timer-fill" id="timerFill"></div></div>
+        <div class="answered mono" id="answeredCount">0 / ${state.players.length}</div>
+      </div>
+      ${msg.round_type === 'text' ? `<div class="qtext">${escapeHtml(msg.question)}</div>` : `<div class="qtext" style="font-size:1.6rem">${escapeHtml(msg.question)}</div>`}
+      ${mediaHtml}
+      <div class="options">${opts}</div>
+    </div>
+    <div class="controls"><button class="ctl" onclick="revealAnswer()">Reveal Answer</button></div>
+  `);
+
+  const fill = document.getElementById('timerFill');
+  state.timer = setInterval(() => {
+    state.timeLeft -= 0.1;
+    const pct = Math.max(0, (state.timeLeft / state.timeLimit) * 100);
+    if (fill) fill.style.width = pct + '%';
+    if (state.timeLeft <= 0) clearInterval(state.timer);
+  }, 100);
+}
+
+function updateAnsweredCount(msg) {
+  const el = document.getElementById('answeredCount');
+  if (el) el.textContent = `${msg.answered} / ${msg.total}`;
+}
+
+function revealAnswer() { ws.send(JSON.stringify({ action: 'reveal' })); }
+
+function renderReveal(msg) {
+  const total = msg.counts.reduce((a, b) => a + b, 0) || 1;
+  const bars = msg.counts.map((c, i) => `
+    <div class="bar-row ${i === msg.correct ? 'correct' : ''}">
+      <div class="label">${SHAPES[i]}</div>
+      <div class="track"><div class="fill" style="width:${(c/total*100)}%">${c}</div></div>
+    </div>
+  `).join('');
+  render(`
+    <div class="reveal">
+      <div class="correct-answer">Correct answer: ${SHAPES[msg.correct]}</div>
+      <div class="bars">${bars}</div>
+    </div>
+    <div class="controls"><button class="ctl" onclick="showLeaderboard()">Leaderboard →</button></div>
+  `);
+}
+
+function showLeaderboard() { ws.send(JSON.stringify({ action: 'show_leaderboard' })); }
+
+function renderLeaderboard(msg) {
+  const rows = msg.board.map((p, i) => `
+    <div class="lb-row"><div class="lb-rank mono">#${i+1}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>
+  `).join('');
+  const nextLabel = msg.round_done ? 'Next Round / Continue' : 'Next Question →';
+  render(`
+    <div class="leaderboard">
+      <div class="lb-title">Leaderboard</div>
+      ${rows || '<div class="join-hint">No scores yet</div>'}
+    </div>
+    <div class="controls">
+      ${msg.round_done
+        ? `<button class="ctl secondary" onclick="backToLobby()">Back to Round Select</button>`
+        : `<button class="ctl" onclick="nextQuestion()">Next Question →</button>`}
+      <button class="ctl secondary" onclick="endGame()">End Game</button>
+    </div>
+  `);
+}
+
+function backToLobby() { state.screen = 'lobby'; renderLobby(); }
+function endGame() { ws.send(JSON.stringify({ action: 'end_game' })); }
+
+function renderFinal(msg) {
+  const podium = msg.board.slice(0, 3);
+  const rest = msg.board.slice(3);
+  render(`
+    <div class="leaderboard">
+      <div class="lb-title">🎉 Final Results 🎉</div>
+      ${podium.map((p, i) => `<div class="lb-row"><div class="lb-rank mono">#${i+1}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>`).join('')}
+      ${rest.map((p, i) => `<div class="lb-row"><div class="lb-rank mono">#${i+4}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>`).join('')}
+    </div>
+  `);
+}
+
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
+
+loadRounds().then(() => { renderLobby(); connect(); });
+</script>
+</body>
+</html>

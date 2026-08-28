@@ -1,0 +1,520 @@
+{
+  "event": "MIKU-19 Birthday Quiz",
+  "rounds": [
+    {
+      "id": "general",
+      "title": "General Trivia",
+      "type": "text",
+      "questions": [
+        {
+          "id": "general-1",
+          "question": "PLACEHOLDER General Trivia question 1 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-2",
+          "question": "PLACEHOLDER General Trivia question 2 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-3",
+          "question": "PLACEHOLDER General Trivia question 3 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-4",
+          "question": "PLACEHOLDER General Trivia question 4 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-5",
+          "question": "PLACEHOLDER General Trivia question 5 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-6",
+          "question": "PLACEHOLDER General Trivia question 6 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-7",
+          "question": "PLACEHOLDER General Trivia question 7 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-8",
+          "question": "PLACEHOLDER General Trivia question 8 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-9",
+          "question": "PLACEHOLDER General Trivia question 9 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-10",
+          "question": "PLACEHOLDER General Trivia question 10 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-11",
+          "question": "PLACEHOLDER General Trivia question 11 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-12",
+          "question": "PLACEHOLDER General Trivia question 12 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        },
+        {
+          "id": "general-13",
+          "question": "PLACEHOLDER General Trivia question 13 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20
+        }
+      ]
+    },
+    {
+      "id": "module",
+      "title": "Guess the Module",
+      "type": "image",
+      "questions": [
+        {
+          "id": "module-1",
+          "question": "PLACEHOLDER Guess the Module question 1 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-1.jpg"
+        },
+        {
+          "id": "module-2",
+          "question": "PLACEHOLDER Guess the Module question 2 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-2.jpg"
+        },
+        {
+          "id": "module-3",
+          "question": "PLACEHOLDER Guess the Module question 3 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-3.jpg"
+        },
+        {
+          "id": "module-4",
+          "question": "PLACEHOLDER Guess the Module question 4 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-4.jpg"
+        },
+        {
+          "id": "module-5",
+          "question": "PLACEHOLDER Guess the Module question 5 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-5.jpg"
+        },
+        {
+          "id": "module-6",
+          "question": "PLACEHOLDER Guess the Module question 6 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-6.jpg"
+        },
+        {
+          "id": "module-7",
+          "question": "PLACEHOLDER Guess the Module question 7 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-7.jpg"
+        },
+        {
+          "id": "module-8",
+          "question": "PLACEHOLDER Guess the Module question 8 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-8.jpg"
+        },
+        {
+          "id": "module-9",
+          "question": "PLACEHOLDER Guess the Module question 9 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-9.jpg"
+        },
+        {
+          "id": "module-10",
+          "question": "PLACEHOLDER Guess the Module question 10 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-10.jpg"
+        },
+        {
+          "id": "module-11",
+          "question": "PLACEHOLDER Guess the Module question 11 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-11.jpg"
+        },
+        {
+          "id": "module-12",
+          "question": "PLACEHOLDER Guess the Module question 12 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-12.jpg"
+        },
+        {
+          "id": "module-13",
+          "question": "PLACEHOLDER Guess the Module question 13 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 20,
+          "media": "/media/images/module-13.jpg"
+        }
+      ]
+    },
+    {
+      "id": "song",
+      "title": "Guess the Song",
+      "type": "audio",
+      "questions": [
+        {
+          "id": "song-1",
+          "question": "PLACEHOLDER Guess the Song question 1 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-1.mp3"
+        },
+        {
+          "id": "song-2",
+          "question": "PLACEHOLDER Guess the Song question 2 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-2.mp3"
+        },
+        {
+          "id": "song-3",
+          "question": "PLACEHOLDER Guess the Song question 3 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-3.mp3"
+        },
+        {
+          "id": "song-4",
+          "question": "PLACEHOLDER Guess the Song question 4 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-4.mp3"
+        },
+        {
+          "id": "song-5",
+          "question": "PLACEHOLDER Guess the Song question 5 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-5.mp3"
+        },
+        {
+          "id": "song-6",
+          "question": "PLACEHOLDER Guess the Song question 6 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-6.mp3"
+        },
+        {
+          "id": "song-7",
+          "question": "PLACEHOLDER Guess the Song question 7 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-7.mp3"
+        },
+        {
+          "id": "song-8",
+          "question": "PLACEHOLDER Guess the Song question 8 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-8.mp3"
+        },
+        {
+          "id": "song-9",
+          "question": "PLACEHOLDER Guess the Song question 9 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-9.mp3"
+        },
+        {
+          "id": "song-10",
+          "question": "PLACEHOLDER Guess the Song question 10 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-10.mp3"
+        },
+        {
+          "id": "song-11",
+          "question": "PLACEHOLDER Guess the Song question 11 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-11.mp3"
+        },
+        {
+          "id": "song-12",
+          "question": "PLACEHOLDER Guess the Song question 12 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-12.mp3"
+        },
+        {
+          "id": "song-13",
+          "question": "PLACEHOLDER Guess the Song question 13 \u2014 replace with real content",
+          "options": [
+            "Option A",
+            "Option B",
+            "Option C",
+            "Option D"
+          ],
+          "correct": 0,
+          "time_limit": 15,
+          "media": "/media/audio/song-13.mp3"
+        }
+      ]
+    }
+  ]
+}
