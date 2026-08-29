@@ -1,8 +1,7 @@
 __pycache__/
 *.pyc
 .venv/
-media/images/*.jpg
-media/images/*.png
-media/audio/*.mp3
-!media/images/.gitkeep
-!media/audio/.gitkeep
+backend/static/media/images/*
+backend/static/media/audio/*
+!backend/static/media/images/.gitkeep
+!backend/static/media/audio/.gitkeep
