@@ -65,7 +65,7 @@ ADMIN_PASSWORD=<a-strong-password>
 ```
 
 Visiting `/admin` prompts for these credentials. If the env vars aren't set, it
-falls back to `admin` / `miku19-admin` (a warning is logged at startup) — set
+falls back to `admin` / `xymiku39` (a warning is logged at startup) — change
 them in production. Players' `host`/`play` pages and `/api/rounds` stay public.
 
 ## Generating the song clips

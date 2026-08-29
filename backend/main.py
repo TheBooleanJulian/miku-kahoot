@@ -27,7 +27,7 @@ QUIZ_FILE = BASE_DIR / "questions.json"
 # Admin dashboard creds. Set these as env vars on the host / Zeabur so the quiz
 # can't be edited by anyone who wanders to /admin.
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "miku19-admin")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "xymiku39")
 if "ADMIN_PASSWORD" not in os.environ:
     print("WARNING: ADMIN_PASSWORD not set — logging in with the default. "
           "Set ADMIN_USER / ADMIN_PASSWORD env vars in production.")
