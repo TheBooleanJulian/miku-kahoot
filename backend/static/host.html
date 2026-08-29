@@ -71,8 +71,8 @@
   .audio-vis .bar:nth-child(4){animation-delay:0.3s} .audio-vis .bar:nth-child(5){animation-delay:0.4s}
   .audio-vis .bar:nth-child(6){animation-delay:0.15s} .audio-vis .bar:nth-child(7){animation-delay:0.25s}
   @keyframes pulse { 0%,100% { height: 20px; } 50% { height: 90px; } }
-  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .opt { border-radius: 12px; padding: 1.2rem 1.5rem; font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 0.8rem; }
+  .options { flex: 0 0 50%; margin-top: auto; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; }
+  .opt { border-radius: 12px; padding: 1.2rem 1.5rem; font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 0.8rem; overflow: hidden; }
   .opt .shape { width: 28px; height: 28px; flex-shrink: 0; }
   .opt.o0 { background: #C0392B22; border: 2px solid #C0392B; }
   .opt.o1 { background: #2980B922; border: 2px solid #2980B9; }
@@ -254,7 +254,10 @@ function renderQuestion(msg) {
     const pct = Math.max(0, (state.timeLeft / state.timeLimit) * 100);
     if (fill) fill.style.width = pct + '%';
     if (sec) sec.textContent = Math.ceil(Math.max(0, state.timeLeft));
-    if (state.timeLeft <= 0) clearInterval(state.timer);
+    if (state.timeLeft <= 0) {
+      clearInterval(state.timer);
+      revealAnswer();
+    }
   }, 100);
 }
 
@@ -290,6 +293,19 @@ function renderReveal(msg) {
 function showLeaderboard() { ws.send(JSON.stringify({ action: 'show_leaderboard' })); }
 
 function renderLeaderboard(msg) {
+  if (msg.round_done) {
+    render(`
+      <div class="podium-screen">
+        <div class="podium-title">🏆 ${msg.round_index != null ? `Round ${msg.round_index + 1}` : 'Round'} Complete 🏆</div>
+        ${podiumHtml(msg.board)}
+      </div>
+      <div class="controls">
+        <button class="ctl secondary" onclick="backToLobby()">Back to Round Select</button>
+        <button class="ctl secondary" onclick="endGame()">End Game</button>
+      </div>
+    `);
+    return;
+  }
   const rows = msg.board.map((p, i) => `
     <div class="lb-row"><div class="lb-rank mono">#${i+1}</div><div class="lb-emoji">${escapeHtml(p.emoji || '🙂')}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>
   `).join('');
@@ -299,9 +315,7 @@ function renderLeaderboard(msg) {
       ${rows || '<div class="join-hint">No scores yet</div>'}
     </div>
     <div class="controls">
-      ${msg.round_done
-        ? `<button class="ctl secondary" onclick="backToLobby()">Back to Round Select</button>`
-        : `<button class="ctl" onclick="nextQuestion()">Next Question →</button>`}
+      <button class="ctl" onclick="nextQuestion()">Next Question →</button>
       <button class="ctl secondary" onclick="endGame()">End Game</button>
     </div>
   `);
@@ -312,21 +326,24 @@ function endGame() { ws.send(JSON.stringify({ action: 'end_game' })); }
 
 function renderFinal(msg) {
   const board = msg.board || [];
+  render(`
+    <div class="podium-screen">
+      <div class="podium-title">🏆 Final Results 🏆</div>
+      ${podiumHtml(board)}
+    </div>
+  `);
+  setTimeout(startConfetti, 700);
+}
+
+function podiumHtml(board) {
   const cols = [];
   if (board[1]) cols.push(podCol(board[1], 2));
   if (board[0]) cols.push(podCol(board[0], 1));
   if (board[2]) cols.push(podCol(board[2], 3));
   const rest = board.slice(3);
   const restHtml = rest.length ? `<div class="roster">${rest.map((p, i) => `<div class="roster-row"><span class="lb-rank mono">#${i+4}</span><span class="rn">${escapeHtml(p.name)}</span><span class="rs">${p.score}</span></div>`).join('')}</div>` : '';
-  const podiumHtml = cols.length ? `<div class="podium">${cols.join('')}</div>` : '<div class="join-hint">No players joined</div>';
-  render(`
-    <div class="podium-screen">
-      <div class="podium-title">🏆 Final Results 🏆</div>
-      ${podiumHtml}
-      ${restHtml}
-    </div>
-  `);
-  setTimeout(startConfetti, 700);
+  const podium = cols.length ? `<div class="podium">${cols.join('')}</div>` : '<div class="join-hint">No players joined</div>';
+  return `${podium}${restHtml}`;
 }
 
 function podCol(p, place) {

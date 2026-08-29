@@ -359,7 +359,10 @@ async def handle_host_message(room: Room, msg: dict):
 
     elif action == "show_leaderboard":
         room.state = "leaderboard"
-        await broadcast_all(room, {"type": "leaderboard", "board": room.leaderboard(), "round_done": False})
+        r = room.current_round()
+        round_done = bool(r) and (room.question_idx >= len(r["questions"]) - 1)
+        await broadcast_all(room, {"type": "leaderboard", "board": room.leaderboard(),
+                                   "round_done": round_done, "round_index": room.round_idx})
 
     elif action == "end_game":
         room.state = "ended"

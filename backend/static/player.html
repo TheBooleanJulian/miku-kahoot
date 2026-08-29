@@ -311,28 +311,41 @@ function renderResult(msg) {
 }
 
 function renderLeaderboard(msg, isFinal) {
+  if (msg.round_done || isFinal) {
+    render(`
+      <div class="screen">
+        <h1>${isFinal ? '🎉 Final Results' : '🏆 Round Complete'}</h1>
+        ${podiumHtml(msg.board || [])}
+        <div class="dim">Waiting for the host…</div>
+      </div>
+    `);
+    return;
+  }
   const rows = msg.board.map((p, i) => `
     <div class="lb-row ${p.name === myName ? 'me' : ''}"><div class="lb-rank mono">#${i+1}</div><div class="lb-emoji">${esc(p.emoji || '🙂')}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>
   `).join('');
   render(`
     <div class="screen">
-      <h1>${isFinal ? '🎉 Final Results' : 'Leaderboard'}</h1>
+      <h1>Leaderboard</h1>
       ${rows || '<div class="dim">No scores yet</div>'}
-      ${isFinal ? '<div class="dim">Thanks for playing!</div>' : '<div class="dim">Waiting for next question…</div>'}
+      <div class="dim">Waiting for next question…</div>
     </div>
   `);
 }
 
-function renderPodium(board) {
+function podiumHtml(board) {
   const cols = [];
   if (board[1]) cols.push(podCol(board[1], 2));
   if (board[0]) cols.push(podCol(board[0], 1));
   if (board[2]) cols.push(podCol(board[2], 3));
-  const podiumHtml = cols.length ? `<div class="podium">${cols.join('')}</div>` : '<div class="dim">No players joined</div>';
+  return cols.length ? `<div class="podium">${cols.join('')}</div>` : '<div class="dim">No players joined</div>';
+}
+
+function renderPodium(board) {
   render(`
     <div class="screen">
       <h1>🏆 Final Results 🏆</h1>
-      ${podiumHtml}
+      ${podiumHtml(board)}
       <div class="dim">Thanks for playing!</div>
     </div>
     <div class="site-footer mono">Built by TheBooleanJulian</div>
