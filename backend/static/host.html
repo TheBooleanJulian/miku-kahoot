@@ -206,10 +206,13 @@ function renderIntro(msg) {
   render(`
     <div class="intro">
       <div class="rt">Round ${msg.round_index + 1}</div>
-      <div class="rn">${msg.round_title}</div>
+      <div class="rn">${escapeHtml(msg.round_title)}</div>
       <div class="rc">${msg.question_count} questions</div>
     </div>
-    <div class="controls"><button class="ctl" onclick="nextQuestion()">Start Round →</button></div>
+    <div class="controls">
+      <button class="ctl secondary" onclick="backToLobby()">‹ Back to Round Select</button>
+      <button class="ctl" onclick="nextQuestion()">Start Round →</button>
+    </div>
   `);
 }
 
@@ -294,9 +297,10 @@ function showLeaderboard() { ws.send(JSON.stringify({ action: 'show_leaderboard'
 
 function renderLeaderboard(msg) {
   if (msg.round_done) {
+    const title = msg.round_title || (msg.round_index != null ? `Round ${msg.round_index + 1}` : 'Round');
     render(`
       <div class="podium-screen">
-        <div class="podium-title">🏆 ${msg.round_index != null ? `Round ${msg.round_index + 1}` : 'Round'} Complete 🏆</div>
+        <div class="podium-title">🏆 ${escapeHtml(title)} Complete 🏆</div>
         ${podiumHtml(msg.board)}
       </div>
       <div class="controls">

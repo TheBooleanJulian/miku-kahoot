@@ -312,9 +312,10 @@ function renderResult(msg) {
 
 function renderLeaderboard(msg, isFinal) {
   if (msg.round_done || isFinal) {
+    const title = msg.round_title || (isFinal ? 'Final Results' : 'Round Complete');
     render(`
       <div class="screen">
-        <h1>${isFinal ? '🎉 Final Results' : '🏆 Round Complete'}</h1>
+        <h1>${isFinal ? '🎉 Final Results' : `🏆 ${escapeHtml(title)} Complete`}</h1>
         ${podiumHtml(msg.board || [])}
         <div class="dim">Waiting for the host…</div>
       </div>
