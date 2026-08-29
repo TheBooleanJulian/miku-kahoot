@@ -42,9 +42,14 @@
   .card.player .title { color: var(--gold); }
   .card.admin .title { color: var(--text); }
   .footer { color: var(--dim); font-size: 0.85rem; }
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .part-dot { position: absolute; bottom: -14px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,200,0.5), rgba(0,212,200,0)); animation: floatUp linear infinite; }
+  @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 8% { opacity: 0.6; } 100% { transform: translateY(-105vh); opacity: 0; } }
+  .wrap { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
+<div class="particles" id="bgParticles"></div>
 <div class="wrap">
   <div>
     <div class="logo"><span class="miku">MIKU-19</span> <span class="live">Live Quiz</span></div>
@@ -70,5 +75,21 @@
   </div>
   <div class="footer mono">Built by TheBooleanJulian</div>
 </div>
+<script>
+(function initParticles() {
+  const hostEl = document.getElementById('bgParticles');
+  if (!hostEl) return;
+  for (var i = 0; i < 22; i++) {
+    var d = document.createElement('div');
+    d.className = 'part-dot';
+    var size = 3 + Math.random() * 8;
+    d.style.width = d.style.height = size + 'px';
+    d.style.left = (Math.random() * 100) + 'vw';
+    d.style.animationDuration = (10 + Math.random() * 16) + 's';
+    d.style.animationDelay = (-Math.random() * 22) + 's';
+    hostEl.appendChild(d);
+  }
+})();
+</script>
 </body>
 </html>

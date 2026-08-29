@@ -699,6 +699,29 @@
           "media": "/media/audio/song-13.mp3"
         }
       ]
+    },
+    {
+      "id": "test",
+      "title": "Quick Test",
+      "type": "text",
+      "questions": [
+        {
+          "id": "test-1",
+          "question": "What is 2 + 2?",
+          "options": ["3", "4", "5", "6"],
+          "correct": 1,
+          "time_limit": 20,
+          "explanation": "2 + 2 = 4. Just making sure the rooms and scoring work!"
+        },
+        {
+          "id": "test-2",
+          "question": "Which of these is an emoji?",
+          "options": ["😀", "123", "abc", "x"],
+          "correct": 0,
+          "time_limit": 20,
+          "explanation": "The grinning face is an emoji — handy for checking that emoji render on the question screen."
+        }
+      ]
     }
   ]
 }

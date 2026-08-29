@@ -10,6 +10,9 @@ room state, single host screen + single player screen. Four rounds:
 | Guess the Module | `image` | 13 | cropped image of a Miku module/figure + 4 options |
 | Guess the Song | `audio` | 13 | 1s auto-playing clip + 4 song-name options |
 
+> A **Quick Test** round (2 `text` questions) is also included for fast
+> iteration — delete it via the admin dashboard once you're done testing.
+
 ## Run locally
 
 ```bash

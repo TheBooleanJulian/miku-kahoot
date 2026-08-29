@@ -68,10 +68,14 @@ def new_pin() -> str:
             return pin
 
 
+DEFAULT_EMOJI = "🙂"
+
+
 class Player:
-    def __init__(self, pid: str, name: str, ws: WebSocket):
+    def __init__(self, pid: str, name: str, ws: WebSocket, emoji: str = DEFAULT_EMOJI):
         self.id = pid
         self.name = name
+        self.emoji = emoji or DEFAULT_EMOJI
         self.ws = ws
         self.score = 0
         self.connected = True
@@ -120,13 +124,13 @@ class Room:
 
     def leaderboard(self, top=10):
         ranked = sorted(self.players.values(), key=lambda p: p.score, reverse=True)
-        return [{"name": p.name, "score": p.score} for p in ranked[:top]]
+        return [{"name": p.name, "score": p.score, "emoji": p.emoji} for p in ranked[:top]]
 
     async def broadcast_players(self):
         if self.host:
             await safe_send(self.host, {
                 "type": "players_update",
-                "players": [{"id": p.id, "name": p.name} for p in self.players.values()],
+                "players": [{"id": p.id, "name": p.name, "emoji": p.emoji} for p in self.players.values()],
                 "count": len(self.players),
             })
 
@@ -368,8 +372,9 @@ async def ws_player(websocket: WebSocket, pin: str):
         return
 
     name = (join_msg.get("name") or "Player").strip()[:20] or "Player"
+    emoji = (join_msg.get("emoji") or DEFAULT_EMOJI).strip()[:8] or DEFAULT_EMOJI
     pid = f"{name}-{random.randint(1000, 9999)}"
-    player = Player(pid, name, websocket)
+    player = Player(pid, name, websocket, emoji)
     room.players[pid] = player
     await safe_send(websocket, {"type": "joined", "player_id": pid, "name": name})
     await room.broadcast_players()
