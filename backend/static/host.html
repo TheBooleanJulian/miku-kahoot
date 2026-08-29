@@ -29,7 +29,9 @@
   .site-footer { position: fixed; bottom: 0; left: 0; right: 0; color: var(--dim); font-size: 0.8rem; text-align: center; padding: 0.6rem; background: var(--void); }
 
   /* ---------- Lobby ---------- */
-  .lobby { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
+  .lobby { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
+  .nav-back { position: absolute; top: 1rem; left: 1rem; color: var(--dim); text-decoration: none; font-size: 0.9rem; background: var(--panel); border: 1px solid #1A2029; padding: 0.4rem 0.9rem; border-radius: 999px; transition: 0.15s; }
+  .nav-back:hover { color: var(--teal); border-color: var(--teal); }
   .pin-label { color: var(--dim); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.85rem; }
   .pin { font-family: 'JetBrains Mono', monospace; font-size: 6rem; font-weight: 700; color: var(--teal); letter-spacing: 0.15em; text-shadow: 0 0 40px rgba(0,212,200,0.35); }
   .join-hint { color: var(--dim); font-size: 1.1rem; }
@@ -183,6 +185,7 @@ function renderLobby() {
     </button>`).join('');
   render(`
     <div class="lobby">
+      <a class="nav-back" href="/">‹ Home</a>
       <div class="pin-label">Join at ${location.origin}/play — Game PIN</div>
       <div class="pin mono">${state.pin || '------'}</div>
       <div class="join-hint"><span class="player-count">${state.players.length}</span> player${state.players.length===1?'':'s'} joined</div>

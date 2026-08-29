@@ -53,6 +53,21 @@ Once you send me the PDF of your actual questions (and, for the image round,
 tell me which crops/files to use), I'll fill `questions.json` in for you
 directly instead of you hand-editing JSON.
 
+## Admin security
+
+The admin dashboard (`/admin`) is password-protected, and all edits go through
+it (`/api/questions`, `/api/media`). Set the credentials as env vars (e.g. on
+Zeabur) so random players can't reach it:
+
+```
+ADMIN_USER=<your-user>
+ADMIN_PASSWORD=<a-strong-password>
+```
+
+Visiting `/admin` prompts for these credentials. If the env vars aren't set, it
+falls back to `admin` / `miku19-admin` (a warning is logged at startup) — set
+them in production. Players' `host`/`play` pages and `/api/rounds` stay public.
+
 ## Generating the song clips
 
 `scripts/cut_clips.py` is a **local** script — run it on your own machine (not

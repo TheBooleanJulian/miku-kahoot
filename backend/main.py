@@ -6,20 +6,31 @@ restart the process = rooms reset). Three rounds: text / image / audio,
 loaded from questions.json. Host drives the room; players join with a PIN.
 """
 import asyncio
+import base64
 import json
+import os
 import random
+import secrets
 import string
 import time
 from pathlib import Path
 from typing import Optional
 
-from fastapi import FastAPI, UploadFile, File, WebSocket, WebSocketDisconnect
+from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile, File, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 QUIZ_FILE = BASE_DIR / "questions.json"
+
+# Admin dashboard creds. Set these as env vars on the host / Zeabur so the quiz
+# can't be edited by anyone who wanders to /admin.
+ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "miku19-admin")
+if "ADMIN_PASSWORD" not in os.environ:
+    print("WARNING: ADMIN_PASSWORD not set — logging in with the default. "
+          "Set ADMIN_USER / ADMIN_PASSWORD env vars in production.")
 
 with open(QUIZ_FILE, encoding="utf-8") as f:
     QUIZ_DATA = json.load(f)
@@ -184,17 +195,32 @@ async def rounds_meta():
     ]
 
 
-@app.get("/admin")
+def require_admin(request: Request):
+    auth = request.headers.get("Authorization", "")
+    if auth.startswith("Basic "):
+        try:
+            user, _, pw = base64.b64decode(auth[6:]).decode("utf-8").partition(":")
+        except Exception:
+            user = pw = ""
+        if secrets.compare_digest(user, ADMIN_USER) and secrets.compare_digest(pw, ADMIN_PASSWORD):
+            return True
+    raise HTTPException(
+        status_code=401,
+        headers={"WWW-Authenticate": 'Basic realm="miku-kahoot-admin"'},
+    )
+
+
+@app.get("/admin", dependencies=[Depends(require_admin)])
 async def admin():
     return nocache(STATIC_DIR / "admin.html")
 
 
-@app.get("/api/questions")
+@app.get("/api/questions", dependencies=[Depends(require_admin)])
 async def api_get_questions():
     return QUIZ_DATA
 
 
-@app.post("/api/questions")
+@app.post("/api/questions", dependencies=[Depends(require_admin)])
 async def api_save_questions(data: dict):
     if "rounds" not in data or not isinstance(data["rounds"], list):
         return {"error": 'missing "rounds" list'}
@@ -202,7 +228,7 @@ async def api_save_questions(data: dict):
     return {"ok": True, "rounds": len(data["rounds"])}
 
 
-@app.post("/api/media")
+@app.post("/api/media", dependencies=[Depends(require_admin)])
 async def api_upload_media(question_id: str = "", file: UploadFile = None):
     if not file:
         return {"error": "no file"}

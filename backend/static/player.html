@@ -16,8 +16,10 @@
   .mono { font-family: 'JetBrains Mono', monospace; }
   #app { min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
 
-  .screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; gap: 1.2rem; text-align: center; }
+  .screen { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; gap: 1.2rem; text-align: center; }
   h1 { font-size: 1.6rem; }
+  .nav-back { position: absolute; top: 1rem; left: 1rem; color: var(--dim); text-decoration: none; font-size: 0.9rem; background: var(--panel); border: 1px solid #1A2029; padding: 0.4rem 0.9rem; border-radius: 999px; transition: 0.15s; cursor: pointer; font-family: inherit; }
+  .nav-back:hover { color: var(--teal); border-color: var(--teal); }
   input {
     background: var(--panel); border: 1px solid #1A2029; color: var(--text);
     font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; text-align: center;
@@ -120,6 +122,7 @@ const params = new URLSearchParams(location.search);
 let ws = null;
 let myName = '', myId = '', myScore = 0;
 let myEmojiIdx = 0;
+let leaving = false;
 let hasAnswered = false;
 let multi = false;
 let selected = [];
@@ -138,6 +141,7 @@ function renderJoin(err, kept) {
   const emojiGrid = EMOJIS.map((e, i) => `<button class="emoji-btn ${i === myEmojiIdx ? 'sel' : ''}" onclick="setEmoji(${i})">${e}</button>`).join('');
   render(`
     <div class="screen">
+      <a class="nav-back" href="/">‹ Home</a>
       <h1>MIKU-19 Quiz</h1>
       <div class="dim">Enter the game PIN from the screen</div>
       <input id="pinInput" class="mono" placeholder="PIN" maxlength="6" inputmode="numeric" value="${esc(kept?.pin ?? pinPrefill)}">
@@ -163,7 +167,7 @@ function doJoin() {
   ws.onopen = () => ws.send(JSON.stringify({ name, emoji }));
   ws.onmessage = (ev) => handleMessage(JSON.parse(ev.data));
   ws.onerror = () => renderJoin('Could not connect. Check the PIN.', { pin, name });
-  ws.onclose = () => { if (!finished) renderJoin('Disconnected.', { pin, name }); };
+  ws.onclose = () => { if (!finished && !leaving) renderJoin('Disconnected.', { pin, name }); };
 }
 
 function handleMessage(msg) {
@@ -181,11 +185,19 @@ function handleMessage(msg) {
 function renderWaiting(extra) {
   render(`
     <div id="waitScreen" class="screen">
+      <button class="nav-back" onclick="backToJoin()">‹ Back</button>
       <div class="wait-pulse"></div>
       <h1>You're in, ${escapeHtml(myName)}!</h1>
       <div class="dim">${extra || 'Waiting for the host to start…'}</div>
     </div>
   `);
+}
+
+function backToJoin() {
+  leaving = true;
+  try { if (ws) ws.close(); } catch (e) {}
+  myId = ''; myName = '';
+  renderJoin();
 }
 
 function renderRoundIntro(msg) {
