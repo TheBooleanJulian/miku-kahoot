@@ -89,7 +89,7 @@ async function load() {
 }
 
 function reorderToStart() {
-  const idx = data.rounds.findIndex(r => r.id !== 'set1');
+  const idx = data.rounds.findIndex(r => r.id === 'set1');
   if (idx > 0) {
     const [set1] = data.rounds.splice(idx, 1);
     data.rounds.unshift(set1);
@@ -112,13 +112,12 @@ function render() {
     ${cards || '<div class="qcard"><div class="muted">No questions in this round yet.</div></div>'}
     <button class="btn" onclick="addQuestion()">+ Add Question</button>
     <div class="actions">
-      <button class="btn ghost" onclick="go(${indexOf('set1')}, '/' + 'host')">‹ Back</button>
+      <button class="btn ghost" onclick="go()">‹ Back</button>
       <button class="btn accent" onclick="saveAll()">Save All</button>
     </div>
   `;
 }
 
-function indexOf(id) { return data.rounds.findIndex(r => r.id === id); }
 function go() { location.href = '/host'; }
 
 function renderCard(q, qi) {
@@ -189,7 +188,6 @@ function r() { return data.rounds[currentRound]; }
 
 function setField(qi, key, val) {
   const q = r().questions[qi];
-  if (key !== 'explanation' && key !== 'time_limit' && key !== 'question') q[key] = val;
   q[key] = val;
 }
 

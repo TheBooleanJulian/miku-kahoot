@@ -1,10 +1,11 @@
 # MIKU-19 Live Quiz
 
 Kahoot-style live quiz with no player cap. FastAPI + native WebSockets, in-memory
-room state, single host screen + single player screen. Three rounds:
+room state, single host screen + single player screen. Four rounds:
 
 | Round | Type | Questions | Notes |
 |---|---|---|---|
+| Miku Trivia | `text` | 13 | Vocaloid lore + producer/pairing questions |
 | General Trivia | `text` | 13 | plain question + 4 text options |
 | Guess the Module | `image` | 13 | cropped image of a Miku module/figure + 4 options |
 | Guess the Song | `audio` | 13 | 1s auto-playing clip + 4 song-name options |
@@ -17,8 +18,10 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-- Host screen (put this on the projector/TV): `http://localhost:8000/`
+- Landing page (links to the host and player screens): `http://localhost:8000/`
+- Host screen (put this on the projector/TV): `http://localhost:8000/host`
 - Player screen (share this + the PIN): `http://localhost:8000/play`
+- Admin dashboard (edit questions / upload media): `http://localhost:8000/admin`
 
 The host screen generates a 6-digit PIN on load. Players enter it at `/play`
 (or you can share `/play?pin=123456` directly).
@@ -70,8 +73,24 @@ Output lands directly in `backend/static/media/audio/`, matching what
 1. Push this repo to GitHub.
 2. Create a new Zeabur service from the repo, root directory `backend`.
 3. Zeabur will pick up `requirements.txt` + `Procfile` automatically.
-4. Point players at `https://<your-zeabur-domain>/play` and put
-   `https://<your-zeabur-domain>/` up on the host screen.
+4. Put `https://<your-zeabur-domain>/host` up on the projector/host screen and
+   point players at `https://<your-zeabur-domain>/play`. The lobby's join hint
+   is built from the page's own origin, so it always matches whatever host
+   serve the app.
+
+### Image & audio media
+
+Image and audio questions carry a `"media": "/media/…"` path. Two ways to get
+the files in place:
+
+- **Upload via the admin dashboard** (`/admin`): pick a round → a question →
+  Upload. Files are validated by extension (jpg/jpeg/png/webp/gif for images,
+  mp3/ogg/wav for audio), capped at 20 MB, and served from `/media/…`.
+- **Commit them into the repo.** Media is git-ignored (see `.gitignore`), so
+  uploaded files live in the running container only and are **lost on redeploy**.
+  For persistent media, drop the files into `backend/static/media/images/` or
+  `backend/static/media/audio/` and force-add them (`git add -f`) so they ship
+  in the image.
 
 No database, no external services — just the one process. Room state is
 in-memory, so a redeploy mid-event would reset any live game (fine for a

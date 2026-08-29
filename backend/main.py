@@ -29,6 +29,7 @@ app.mount("/media", StaticFiles(directory=STATIC_DIR / "media"), name="media")
 
 BASE_POINTS = 1000
 MIN_POINTS = 100
+MAX_MEDIA_BYTES = 20 * 1024 * 1024  # 20 MB per uploaded image/audio file
 
 
 def save_quiz_data(data):
@@ -205,13 +206,24 @@ async def api_upload_media(question_id: str = "", file: UploadFile = None):
     ext = Path(file.filename or "").suffix.lower()
     if ext not in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".mp3", ".ogg", ".wav"}:
         return {"error": f"unsupported file type: {ext}"}
-    kind = ext in {".jpg", ".jpeg", ".png", ".webp", ".gif"} and "images" or "audio"
+    kind = "images" if ext in {".jpg", ".jpeg", ".png", ".webp", ".gif"} else "audio"
     media_dir = STATIC_DIR / "media" / kind
     media_dir.mkdir(parents=True, exist_ok=True)
     safe_id = "".join(c for c in (question_id or "q") if c.isalnum() or c in "-_") or "q"
     name = f"{safe_id}{ext}"
     dest = media_dir / name
-    dest.write_bytes(await file.read())
+    # Stream to disk in chunks so large uploads don't sit in RAM; enforce a cap.
+    total = 0
+    with dest.open("wb") as fh:
+        while True:
+            chunk = await file.read(1024 * 1024)
+            if not chunk:
+                break
+            total += len(chunk)
+            if total > MAX_MEDIA_BYTES:
+                dest.unlink(missing_ok=True)
+                return {"error": "file too large (max 20MB)"}
+            fh.write(chunk)
     return {"ok": True, "media": f"/media/{kind}/{name}"}
 
 

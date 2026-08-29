@@ -97,7 +97,7 @@
   .lb-row:nth-child(1) .lb-rank { color: var(--gold); }
 
   /* ---------- Podium ---------- */
-  .podium-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; padding: 1rem; }
+  .podium-screen { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1.2rem; padding: 1rem; }
   .podium-title { color: var(--gold); text-transform: uppercase; letter-spacing: 0.25em; font-size: 1.1rem; }
   .podium { display: flex; align-items: flex-end; justify-content: center; gap: 1.5rem; }
   .pod-col { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 130px; }
@@ -166,7 +166,7 @@ function renderLobby() {
     </button>`).join('');
   render(`
     <div class="lobby">
-      <div class="pin-label">Join at https://miku-kahoot.thebooleanjulian.dev/play — Game PIN</div>
+      <div class="pin-label">Join at ${location.origin}/play — Game PIN</div>
       <div class="pin mono">${state.pin || '------'}</div>
       <div class="join-hint"><span class="player-count">${state.players.length}</span> player${state.players.length===1?'':'s'} joined</div>
       <div class="player-grid">${state.players.map(p => `<div class="chip">${escapeHtml(p.name)}</div>`).join('')}</div>
@@ -265,7 +265,6 @@ function renderLeaderboard(msg) {
   const rows = msg.board.map((p, i) => `
     <div class="lb-row"><div class="lb-rank mono">#${i+1}</div><div class="lb-name">${escapeHtml(p.name)}</div><div class="lb-score mono">${p.score}</div></div>
   `).join('');
-  const nextLabel = msg.round_done ? 'Next Round / Continue' : 'Next Question →';
   render(`
     <div class="leaderboard">
       <div class="lb-title">Leaderboard</div>

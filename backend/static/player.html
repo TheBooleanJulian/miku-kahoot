@@ -57,6 +57,10 @@
   .ans-btn:disabled { opacity: 0.4; }
   .ans-btn.chosen { outline: 4px solid #fff; }
 
+  .media-wrap { display: flex; align-items: center; justify-content: center; max-height: 34vh; padding: 0.5rem 1rem 0; }
+  .media-wrap img { max-height: 30vh; max-width: 100%; border-radius: 12px; border: 2px solid #1A2029; object-fit: contain; }
+  .media-wrap audio { width: 100%; max-width: 320px; }
+
   .result-icon { font-size: 4rem; }
   .result-correct { color: var(--teal); }
   .result-wrong { color: var(--danger); }
@@ -89,6 +93,7 @@ let myName = '', myId = '', myScore = 0;
 let hasAnswered = false;
 let multi = false;
 let selected = [];
+let finished = false;
 let timer = null, timeLeft = 0, timeLimit = 0;
 
 function render(html) { app.innerHTML = html; }
@@ -119,7 +124,7 @@ function doJoin() {
   ws.onopen = () => ws.send(JSON.stringify({ name }));
   ws.onmessage = (ev) => handleMessage(JSON.parse(ev.data));
   ws.onerror = () => renderJoin('Could not connect. Check the PIN.');
-  ws.onclose = () => { if (document.getElementById('waitScreen')) renderJoin('Disconnected.'); };
+  ws.onclose = () => { if (!finished) renderJoin('Disconnected.'); };
 }
 
 function handleMessage(msg) {
@@ -130,7 +135,7 @@ function handleMessage(msg) {
   else if (msg.type === 'answer_received') { markAnswered(msg.option); }
   else if (msg.type === 'your_result') { renderResult(msg); }
   else if (msg.type === 'leaderboard') { renderLeaderboard(msg); }
-  else if (msg.type === 'final') { renderPodium(msg.board || []); }
+  else if (msg.type === 'final') { finished = true; renderPodium(msg.board || []); }
   else if (msg.type === 'kicked' || msg.type === 'host_left') { renderJoin('Removed from game.'); }
 }
 
@@ -161,6 +166,13 @@ function renderQuestion(msg) {
   const btns = msg.options.map((o, i) => `<button class="ans-btn o${i}" onclick="${multi ? `toggleAnswer(${i})` : `sendAnswer(${i})`}">${SHAPES[i]} ${escapeHtml(o)}</button>`).join('');
   const multiHint = multi ? `<div class="dim">Select all that apply</div>` : '';
 
+  let mediaHtml = '';
+  if (msg.round_type === 'image' && msg.media) {
+    mediaHtml = `<div class="media-wrap"><img src="${msg.media}" alt=""></div>`;
+  } else if (msg.round_type === 'audio' && msg.media) {
+    mediaHtml = `<div class="media-wrap"><audio id="clip" src="${msg.media}" controls autoplay></audio></div>`;
+  }
+
   render(`
     <div class="name-tag">${escapeHtml(myName)}</div>
     <div class="score-tag mono">${myScore}</div>
@@ -169,6 +181,7 @@ function renderQuestion(msg) {
       ${multiHint}
     </div>
     <div class="timer-wrap"><div class="timer-fill" id="timerFill"></div></div>
+    ${mediaHtml}
     <div class="answer-grid" id="answerGrid">${btns}</div>
     ${multi ? `<div class="screen" style="padding:0 0 1.5rem"><button class="primary" onclick="submitSelection()">Submit</button></div>` : ''}
   `);
