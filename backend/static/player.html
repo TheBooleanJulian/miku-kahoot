@@ -181,6 +181,7 @@ function handleMessage(msg) {
   else if (msg.type === 'joined') { myId = msg.player_id; renderWaiting(); }
   else if (msg.type === 'round_intro') { renderRoundIntro(msg); }
   else if (msg.type === 'question') { renderQuestion(msg); }
+  else if (msg.type === 'timer') { updateTimer(msg); }
   else if (msg.type === 'answer_received') { markAnswered(msg.option); }
   else if (msg.type === 'your_result') { renderResult(msg); }
   else if (msg.type === 'leaderboard') { renderLeaderboard(msg); }
@@ -219,7 +220,6 @@ function renderQuestion(msg) {
   timeLimit = msg.time_limit;
   timeLeft = msg.time_limit;
   clearInterval(timer);
-
   const btns = msg.options.map((o, i) => `<button class="ans-btn o${i}" onclick="${multi ? `toggleAnswer(${i})` : `sendAnswer(${i})`}">${SHAPES[i]} ${escapeHtml(o)}</button>`).join('');
   const multiHint = multi ? `<div class="dim">Select all that apply</div>` : '';
 
@@ -242,16 +242,16 @@ function renderQuestion(msg) {
     <div class="answer-grid" id="answerGrid">${btns}</div>
     ${multi ? `<div class="screen" style="padding:0 0 1.5rem"><button class="primary" onclick="submitSelection()">Submit</button></div>` : ''}
   `);
+}
 
+function updateTimer(msg) {
+  timeLeft = msg.remaining;
+  const pct = Math.max(0, (msg.remaining / timeLimit) * 100);
   const fill = document.getElementById('timerFill');
   const sec = document.getElementById('timerSec');
-  timer = setInterval(() => {
-    timeLeft -= 0.1;
-    const pct = Math.max(0, (timeLeft / timeLimit) * 100);
-    if (fill) fill.style.width = pct + '%';
-    if (sec) sec.textContent = Math.ceil(Math.max(0, timeLeft));
-    if (timeLeft <= 0) { clearInterval(timer); disableButtons(); }
-  }, 100);
+  if (fill) fill.style.width = pct + '%';
+  if (sec) sec.textContent = Math.ceil(Math.max(0, msg.remaining));
+  if (msg.remaining <= 0) disableButtons();
 }
 
 function toggleAnswer(i) {

@@ -102,6 +102,8 @@ class Room:
         self.question_idx = -1      # index into current round's questions
         self.state = "lobby"        # lobby | question | reveal | leaderboard | ended
         self.question_start = 0.0
+        self.time_limit = 0.0
+        self.time_task: Optional[asyncio.Task] = None
         self.answers: dict[str, dict] = {}  # player_id -> {"option": int, "t": float}
         self.lock = asyncio.Lock()
 
@@ -152,6 +154,39 @@ class Room:
                 "answered": len(self.answers),
                 "total": len(self.players),
             })
+
+    async def start_timer(self):
+        await self.stop_timer()
+        limit = self.time_limit
+
+        async def tick():
+            started = time.time()
+            while True:
+                if self.state != "question":
+                    return
+                elapsed = time.time() - started
+                remaining = max(0.0, limit - elapsed)
+                await broadcast_all(self, {
+                    "type": "timer",
+                    "remaining": round(remaining, 1),
+                    "limit": limit,
+                })
+                if remaining <= 0:
+                    await do_reveal(self)
+                    return
+                await asyncio.sleep(0.25)
+
+        self.time_task = asyncio.create_task(tick())
+
+    async def stop_timer(self):
+        if self.time_task is not None:
+            if self.time_task is not asyncio.current_task():
+                self.time_task.cancel()
+                try:
+                    await self.time_task
+                except asyncio.CancelledError:
+                    pass
+            self.time_task = None
 
 
 async def safe_send(ws: WebSocket, data: dict):
@@ -310,6 +345,7 @@ async def handle_host_message(room: Room, msg: dict):
         if room.question_idx >= len(r["questions"]):
             # round finished
             room.state = "leaderboard"
+            await room.stop_timer()
             payload = {"type": "leaderboard", "board": room.leaderboard(),
                        "round_done": True, "round_index": room.round_idx,
                        "round_title": r["title"]}
@@ -319,47 +355,18 @@ async def handle_host_message(room: Room, msg: dict):
         room.answers = {}
         room.question_start = time.time()
         q = room.current_question()
+        room.time_limit = q["time_limit"]
         payload = room.public_question_payload(q, r)
         await broadcast_all(room, payload)
         await room.broadcast_answer_count()
+        await room.start_timer()
 
     elif action == "reveal":
-        q = room.current_question()
-        if not q:
-            return
-        room.state = "reveal"
-        # tally per-option counts
-        counts = [0] * len(q["options"])
-        for a in room.answers.values():
-            for o in normalize_answer(a["option"]):
-                if 0 <= o < len(counts):
-                    counts[o] += 1
-        await broadcast_all(room, {
-            "type": "reveal",
-            "correct": correct_indices(q),
-            "counts": counts,
-            "board": room.leaderboard(),
-            "question": q["question"],
-            "options": q["options"],
-            "explanation": q.get("explanation", ""),
-        })
-        # tell each player their own result
-        for p in room.players.values():
-            a = room.answers.get(p.id)
-            got_it = bool(a and sorted(normalize_answer(a["option"])) == correct_indices(q))
-            await safe_send(p.ws, {
-                "type": "your_result",
-                "correct": got_it,
-                "correct_option": correct_indices(q),
-                "score": p.score,
-                "points_added": (a or {}).get("points", 0),
-                "streak": p.streak,
-                "options": q["options"],
-                "explanation": q.get("explanation", ""),
-            })
+        await do_reveal(room)
 
     elif action == "show_leaderboard":
         room.state = "leaderboard"
+        await room.stop_timer()
         r = room.current_round()
         round_done = bool(r) and (room.question_idx >= len(r["questions"]) - 1)
         await broadcast_all(room, {"type": "leaderboard", "board": room.leaderboard(),
@@ -368,6 +375,7 @@ async def handle_host_message(room: Room, msg: dict):
 
     elif action == "end_game":
         room.state = "ended"
+        await room.stop_timer()
         await broadcast_all(room, {"type": "final", "board": room.leaderboard(top=50)})
 
     elif action == "kick":
@@ -383,6 +391,43 @@ async def broadcast_all(room: Room, payload: dict):
         await safe_send(room.host, payload)
     for p in list(room.players.values()):
         await safe_send(p.ws, payload)
+
+
+async def do_reveal(room: Room):
+    if room.state != "question":
+        return
+    q = room.current_question()
+    if not q:
+        return
+    room.state = "reveal"
+    await room.stop_timer()
+    counts = [0] * len(q["options"])
+    for a in room.answers.values():
+        for o in normalize_answer(a["option"]):
+            if 0 <= o < len(counts):
+                counts[o] += 1
+    await broadcast_all(room, {
+        "type": "reveal",
+        "correct": correct_indices(q),
+        "counts": counts,
+        "board": room.leaderboard(),
+        "question": q["question"],
+        "options": q["options"],
+        "explanation": q.get("explanation", ""),
+    })
+    for p in room.players.values():
+        a = room.answers.get(p.id)
+        got_it = bool(a and sorted(normalize_answer(a["option"])) == correct_indices(q))
+        await safe_send(p.ws, {
+            "type": "your_result",
+            "correct": got_it,
+            "correct_option": correct_indices(q),
+            "score": p.score,
+            "points_added": (a or {}).get("points", 0),
+            "streak": p.streak,
+            "options": q["options"],
+            "explanation": q.get("explanation", ""),
+        })
 
 
 # -------------------------------------------------------------- player WS --

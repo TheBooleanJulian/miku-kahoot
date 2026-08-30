@@ -9,12 +9,7 @@
         {
           "id": "set1-1",
           "question": "When was Hatsune Miku's original Japanese VOCALOID2 voicebank released?",
-          "options": [
-            "2008",
-            "2007",
-            "2006",
-            "2010"
-          ],
+          "options": ["2008", "2007", "2006", "2010"],
           "correct": 1,
           "time_limit": 20,
           "explanation": ""
@@ -22,12 +17,7 @@
         {
           "id": "set1-2",
           "question": "Which date is specifically associated with Miku's original voicebank release anniversary?",
-          "options": [
-            "March 9",
-            "September 1",
-            "August 31",
-            "July 31"
-          ],
+          "options": ["March 9", "September 1", "August 31", "July 31"],
           "correct": 2,
           "time_limit": 20,
           "explanation": "March 9 is Miku Day, but it is not the original voicebank's release date."
@@ -35,12 +25,7 @@
         {
           "id": "set1-3",
           "question": "Which pair consists entirely of Crypton Future Media's Piapro Characters?",
-          "options": [
-            "GUMI and Megurine Luka",
-            "Kasane Teto and Kagamine Rin",
-            "IA and KAITO",
-            "Kagamine Len and MEIKO"
-          ],
+          "options": ["GUMI and Megurine Luka", "Kasane Teto and Kagamine Rin", "IA and KAITO", "Kagamine Len and MEIKO"],
           "correct": 3,
           "time_limit": 20,
           "explanation": "All four are real Vocaloid/virtual-singer characters, but only the selected pair are both Crypton Piapro Characters."
@@ -48,12 +33,7 @@
         {
           "id": "set1-4",
           "question": "Who produced the original “World is Mine”?",
-          "options": [
-            "kz (livetune)",
-            "ryo (supercell)",
-            "DECO*27",
-            "wowaka"
-          ],
+          "options": ["kz (livetune)", "ryo (supercell)", "DECO*27", "wowaka"],
           "correct": 1,
           "time_limit": 20,
           "explanation": ""
@@ -61,12 +41,7 @@
         {
           "id": "set1-5",
           "question": "Which producer is associated with “Tell Your World”?",
-          "options": [
-            "Mitchie M",
-            "wowaka",
-            "kz (livetune)",
-            "ryo (supercell)"
-          ],
+          "options": ["Mitchie M", "wowaka", "kz (livetune)", "ryo (supercell)"],
           "correct": 2,
           "time_limit": 20,
           "explanation": "All four options are major producers associated with Miku, making this a recognition question rather than an elimination question."
@@ -74,12 +49,7 @@
         {
           "id": "set1-6",
           "question": "Which song was created by wowaka?",
-          "options": [
-            "Rolling Girl",
-            "Ghost Rule",
-            "Freely Tomorrow",
-            "The Disappearance of Hatsune Miku"
-          ],
+          "options": ["Rolling Girl", "Ghost Rule", "Freely Tomorrow", "The Disappearance of Hatsune Miku"],
           "correct": 0,
           "time_limit": 20,
           "explanation": ""
@@ -87,12 +57,7 @@
         {
           "id": "set1-7",
           "question": "Which description of Project SEKAI is most accurate?",
-          "options": [
-            "A Miku-focused successor to Project DIVA",
-            "A voice-synthesis engine developed by Crypton",
-            "A rhythm/adventure game combining original characters with Virtual Singers",
-            "A concert platform for projecting Miku onto a screen"
-          ],
+          "options": ["A Miku-focused successor to Project DIVA", "A voice-synthesis engine developed by Crypton", "A rhythm/adventure game combining original characters with Virtual Singers", "A concert platform for projecting Miku onto a screen"],
           "correct": 2,
           "time_limit": 20,
           "explanation": "Project SEKAI combines original human characters with Virtual Singer versions of Miku and the other Crypton characters."
@@ -100,12 +65,7 @@
         {
           "id": "set1-8",
           "question": "Which statement about Kasane Teto is correct?",
-          "options": [
-            "She was originally created by Crypton as Miku's counterpart",
-            "She debuted as a Yamaha VOCALOID2 voicebank in 2008",
-            "She originated as an April Fools character and later became an UTAU voicebank",
-            "She was created specifically for Project SEKAI"
-          ],
+          "options": ["She was originally created by Crypton as Miku's counterpart", "She debuted as a Yamaha VOCALOID2 voicebank in 2008", "She originated as an April Fools character and later became an UTAU voicebank", "She was created specifically for Project SEKAI"],
           "correct": 2,
           "time_limit": 20,
           "explanation": "Teto originated in 2008 and subsequently became an actual singing-synthesis character through UTAU and later other synthesis platforms."
@@ -113,12 +73,7 @@
         {
           "id": "set1-9",
           "question": "Which song became a major Miku/Teto crossover phenomenon in the 2020s?",
-          "options": [
-            "Lagtrain",
-            "Mesmerizer",
-            "Hibikase",
-            "Senbonzakura"
-          ],
+          "options": ["Lagtrain", "Mesmerizer", "Hibikase", "Senbonzakura"],
           "correct": 1,
           "time_limit": 20,
           "explanation": "“Mesmerizer” features both Hatsune Miku and Kasane Teto and was released by 32ki in 2024."
@@ -126,12 +81,7 @@
         {
           "id": "set1-10",
           "question": "Which song is most strongly associated with inabakumori?",
-          "options": [
-            "Bug",
-            "Lagtrain",
-            "Hibikase",
-            "Phony"
-          ],
+          "options": ["Bug", "Lagtrain", "Hibikase", "Phony"],
           "correct": 1,
           "time_limit": 20,
           "explanation": "This is deliberately harder than asking for a famous Miku song: “Lagtrain” is strongly associated with inabakumori but features Kaai Yuki rather than Miku."
@@ -139,12 +89,7 @@
         {
           "id": "set1-11",
           "question": "Which song/producer pairing is correct?",
-          "options": [
-            "Melt — DECO*27",
-            "Ghost Rule — ryo",
-            "The Disappearance of Hatsune Miku — cosMo@BousouP",
-            "World is Mine — wowaka"
-          ],
+          "options": ["Melt — DECO*27", "Ghost Rule — ryo", "The Disappearance of Hatsune Miku — cosMo@BousouP", "World is Mine — wowaka"],
           "correct": 2,
           "time_limit": 20,
           "explanation": "All four producers are genuine major Vocaloid names; only the pairing is correct."
@@ -152,216 +97,252 @@
         {
           "id": "set1-12",
           "question": "Which THREE statements about Kasane Teto are correct?",
-          "options": [
-            "She has an UTAU voicebank",
-            "She is an official Crypton Piapro Character",
-            "She later received a Synthesizer V AI voice",
-            "She originated as an April Fools project"
-          ],
-          "correct": [
-            0,
-            2,
-            3
-          ],
+          "options": ["She has an UTAU voicebank", "She is an official Crypton Piapro Character", "She later received a Synthesizer V AI voice", "She originated as an April Fools project"],
+          "correct": [0, 2, 3],
           "time_limit": 30,
           "explanation": "Teto's official chronology records her April 2008 debut and subsequent UTAU development; she later expanded into newer synthesis platforms."
         },
         {
           "id": "set1-13",
           "question": "Which THREE song/producer pairings are correct?",
-          "options": [
-            "Ghost Rule — DECO*27",
-            "Rolling Girl — Mitchie M",
-            "Melt — ryo",
-            "Tell Your World — kz (livetune)"
-          ],
-          "correct": [
-            0,
-            2,
-            3
-          ],
+          "options": ["Ghost Rule — DECO*27", "Rolling Girl — Mitchie M", "Melt — ryo", "Tell Your World — kz (livetune)"],
+          "correct": [0, 2, 3],
           "time_limit": 30,
           "explanation": "This is intended to separate fans who recognise song titles from fans who actually know the producer catalogue."
         }
       ]
     },
     {
-      "id": "general",
-      "title": "General Trivia",
+      "id": "set2",
+      "title": "Set 2 — Miku Trivia",
       "type": "text",
       "questions": [
         {
-          "id": "general-1",
-          "question": "PLACEHOLDER General Trivia question 1 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-1",
+          "question": "Which company created and released Hatsune Miku?",
+          "options": ["SEGA", "Internet Co., Ltd.", "Yamaha Music", "Crypton Future Media"],
+          "correct": 3,
+          "time_limit": 20,
+          "explanation": "Crypton Future Media (Sapporo) developed and released Miku as part of their Character Vocal Series. SEGA publishes the Project DIVA games; Yamaha created the VOCALOID engine itself."
         },
         {
-          "id": "general-2",
-          "question": "PLACEHOLDER General Trivia question 2 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-2",
+          "question": "What is Hatsune Miku primarily?",
+          "options": ["A rhythm-game mascot created by SEGA", "A human singer whose stage name is Miku", "A virtual singer and singing voicebank character", "A fictional idol who has never had a voicebank"],
+          "correct": 2,
+          "time_limit": 20,
+          "explanation": "Miku is a voicebank for Yamaha's VOCALOID (and later NT) synthesis software, marketed as a virtual singer. She is not a human performer, nor is she limited to games."
         },
         {
-          "id": "general-3",
-          "question": "PLACEHOLDER General Trivia question 3 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-3",
+          "question": "Who illustrated Miku's original character design?",
+          "options": ["iXima", "Mogumo", "redjuice", "KEI"],
+          "correct": 3,
+          "time_limit": 20,
+          "explanation": "KEI designed the original box art and character illustration. iXima, Mogumo, and redjuice are well-known Vocaloid artists but did not create Miku's default design."
         },
         {
-          "id": "general-4",
-          "question": "PLACEHOLDER General Trivia question 4 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-4",
+          "question": "Whose voice was used as the basis for Miku's original Japanese voicebank?",
+          "options": ["Ayane Sakura", "Saki Fujita", "Kana Hanazawa", "Aoi Yūki"],
+          "correct": 1,
+          "time_limit": 20,
+          "explanation": "Voice actress Saki Fujita provided the sampled phonemes. Crypton processed her recordings into the VOCALOID2 library."
         },
         {
-          "id": "general-5",
-          "question": "PLACEHOLDER General Trivia question 5 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-5",
+          "question": "Which colour is most iconic in Miku's character design?",
+          "options": ["Magenta", "Royal blue", "Turquoise / cyan", "Lime green"],
+          "correct": 2,
+          "time_limit": 20,
+          "explanation": "Her signature colour is #39C5BB, a turquoise/cyan shade. This hex code even references '39.'"
         },
         {
-          "id": "general-6",
-          "question": "PLACEHOLDER General Trivia question 6 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "id": "set2-6",
+          "question": "What is the famous Japanese wordplay behind the number 39?",
+          "options": ["san-kyuu ≈ 'thank you'", "san-ku ≈ 'three-nine'", "mi-ku ≈ 'future song'", "miku ≈ 'three songs'"],
           "correct": 0,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "San-kyuu (39) sounds like 'thank you' in Japanese. It is also read as mi-ku, which is why March 9 (3/9) is celebrated as 'Miku Day.'"
         },
         {
-          "id": "general-7",
-          "question": "PLACEHOLDER General Trivia question 7 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-7",
+          "question": "Which game series is most directly associated with Miku as its central rhythm-game character?",
+          "options": ["Project SEKAI: Colorful Stage!", "BanG Dream!", "D4DJ", "Hatsune Miku: Project DIVA"],
+          "correct": 3,
+          "time_limit": 20,
+          "explanation": "The Project DIVA series (SEGA, 2009–present) is built around Miku as the central icon. Project SEKAI features her alongside original human characters, but DIVA is the classic Miku-centric rhythm franchise."
         },
         {
-          "id": "general-8",
-          "question": "PLACEHOLDER General Trivia question 8 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-8",
+          "question": "In Vocaloid culture, what does 'producer' usually mean?",
+          "options": ["A person who manufactures the voicebank hardware", "The manager of every official Miku concert", "An illustrator who only draws character art", "A creator who makes music using a voice-synthesis character"],
+          "correct": 3,
+          "time_limit": 20,
+          "explanation": "A Vocaloid 'producer' is any musician/composer who writes, arranges, and tunes songs using Vocaloid/UTAU/SynthV voicebanks."
         },
         {
-          "id": "general-9",
-          "question": "PLACEHOLDER General Trivia question 9 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-9",
+          "question": "What is a singing voicebank?",
+          "options": ["A collection of official concert recordings", "A database containing every Vocaloid song", "Recorded vocal material and data used by synthesis software", "A library of character illustrations"],
+          "correct": 2,
+          "time_limit": 20,
+          "explanation": "A voicebank is a library of recorded phonemes (and, in modern engines, AI-trained vocal data) that the synthesis engine stitches into singing."
         },
         {
-          "id": "general-10",
-          "question": "PLACEHOLDER General Trivia question 10 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "id": "set2-10",
+          "question": "Which song is associated with DECO*27?",
+          "options": ["Ghost Rule", "Tell Your World", "Senbonzakura", "Melt"],
           "correct": 0,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "'Ghost Rule' (2016) is one of DECO*27's biggest hits. 'Melt' is by ryo, 'Tell Your World' by kz, and 'Senbonzakura' by Kurousa-P."
         },
         {
-          "id": "general-11",
-          "question": "PLACEHOLDER General Trivia question 11 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "id": "set2-11",
+          "question": "Which song is especially associated with producer Mitchie M?",
+          "options": ["Freely Tomorrow", "World is Mine", "Hibikase", "Ghost Rule"],
           "correct": 0,
-          "time_limit": 20
+          "time_limit": 20,
+          "explanation": "'FREELY TOMORROW' (2011) is Mitchie M's breakthrough hit, famous for its ultra-realistic Miku tuning. It held the record for fastest Vocaloid song to reach the Niconico Hall of Legend."
         },
         {
-          "id": "general-12",
-          "question": "PLACEHOLDER General Trivia question 12 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-12",
+          "question": "Which of these is a classic ryo/supercell Miku song?",
+          "options": ["Lagtrain", "Bug", "Mesmerizer", "Melt"],
+          "correct": 3,
+          "time_limit": 20,
+          "explanation": "'Melt' (2007) was ryo's debut Vocaloid work and helped launch the early Miku boom. 'Lagtrain' is by inabakumori, 'Bug' by Kairiki Bear, and 'Mesmerizer' by 32ki (Satsuki)."
         },
         {
-          "id": "general-13",
-          "question": "PLACEHOLDER General Trivia question 13 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
-          "correct": 0,
-          "time_limit": 20
+          "id": "set2-13",
+          "question": "Which three are strongly associated with the broader modern Miku / Vocaloid song landscape? (Select all that apply)",
+          "options": ["Lagtrain", "Bohemian Rhapsody", "Mesmerizer", "Ghost Rule"],
+          "correct": [0, 2, 3],
+          "time_limit": 30,
+          "explanation": "'Lagtrain' (2020), 'Mesmerizer' (2024), and 'Ghost Rule' (2016) span three different eras of Vocaloid. 'Bohemian Rhapsody' is by Queen and unrelated."
         }
       ]
     },
     {
-      "id": "module",
-      "title": "Guess the Module",
+      "id": "set3",
+      "title": "Set 3 — Miku Trivia",
+      "type": "text",
+      "questions": [
+        {
+          "id": "set3-1",
+          "question": "In Project SEKAI, which group is particularly associated with the character Hatsune Miku in its Virtual Singer material?",
+          "options": ["Only Vivid BAD SQUAD", "All groups can feature Virtual Singer versions", "Only Wonderlands x Showtime", "Only Leo/need"],
+          "correct": 1,
+          "time_limit": 20,
+          "explanation": "Every original unit in Project SEKAI has 'SEKAI' versions where Miku and other Virtual Singers appear with thematic outfits matching that unit's musical genre."
+        },
+        {
+          "id": "set3-2",
+          "question": "Which visual feature is most strongly associated with Kasane Teto?",
+          "options": ["Red twin-drill hair", "Turquoise twin tails", "Blue side ponytail", "Pink bob hair"],
+          "correct": 0,
+          "time_limit": 20,
+          "explanation": "Teto's signature look is red hair styled in twin drills (often mistaken for pigtails, which she supposedly hates). Turquoise twin tails belong to Miku."
+        },
+        {
+          "id": "set3-3",
+          "question": "Who produced 'Mesmerizer'?",
+          "options": ["Surii", "32ki (Satsuki)", "Kairiki Bear", "PinocchioP"],
+          "correct": 1,
+          "time_limit": 30,
+          "explanation": "32ki, read as Satsuki (サツキ), is the producer. The music video was animated by channel, which sometimes causes confusion about authorship."
+        },
+        {
+          "id": "set3-4",
+          "question": "Which of these is NOT a Crypton Piapro Character?",
+          "options": ["MEIKO", "Kagamine Len", "GUMI", "KAITO"],
+          "correct": 2,
+          "time_limit": 20,
+          "explanation": "GUMI (Megpoid) is developed by Internet Co., Ltd. MEIKO, Kagamine Len, and KAITO are all part of Crypton's Character Vocal / Piapro series."
+        },
+        {
+          "id": "set3-5",
+          "question": "Which pair consists of a Miku song and its correct producer?",
+          "options": ["39Music! — mikitoP", "Tell Your World — ryo", "Senbonzakura — wowaka", "Melt — DECO*27"],
+          "correct": 0,
+          "time_limit": 30,
+          "explanation": "'39Music!' (2016) is by mikitoP. 'Tell Your World' is kz, 'Senbonzakura' is Kurousa-P, and 'Melt' is ryo."
+        },
+        {
+          "id": "set3-6",
+          "question": "Which statement about Miku's live appearances is most accurate?",
+          "options": ["Every live Miku show uses a physical humanoid robot", "Miku concerts are exclusively pre-recorded videos with no stage performance", "She is commonly presented as a projected virtual performer with live musical accompaniment", "Miku can only appear in Project DIVA concerts"],
+          "correct": 2,
+          "time_limit": 30,
+          "explanation": "Miku concerts (Magical Mirai, Miku Expo, etc.) use Pepper's ghost / transparent screen projection with a live band. She is not a robot, and her appearances span many events beyond Project DIVA."
+        },
+        {
+          "id": "set3-7",
+          "question": "Which three are Crypton Piapro Characters? (Select all that apply)",
+          "options": ["Hatsune Miku", "GUMI", "Kagamine Rin", "Megurine Luka"],
+          "correct": [0, 2, 3],
+          "time_limit": 30,
+          "explanation": "Crypton's Piapro Characters are Miku, Rin, Len, Luka, MEIKO, and KAITO. GUMI is from Internet Co., Ltd."
+        },
+        {
+          "id": "set3-8",
+          "question": "Which three songs have been featured in Project SEKAI's Virtual Singer / song ecosystem? (Select all that apply)",
+          "options": ["Melt", "Bad Apple!!", "World is Mine", "39Music!"],
+          "correct": [0, 2, 3],
+          "time_limit": 30,
+          "explanation": "'Melt,' 'World is Mine,' and '39Music!' are all pre-existing songs in Project SEKAI's Virtual Singer category. 'Bad Apple!!' is a Touhou Project song; while a SEKAI-arranged version exists, it is not part of the core Virtual Singer classic catalogue in the same context."
+        },
+        {
+          "id": "set3-9",
+          "question": "Which three producers are strongly associated with Miku songs? (Select all that apply)",
+          "options": ["Hikakin", "DECO*27", "kz", "ryo (supercell)"],
+          "correct": [1, 2, 3],
+          "time_limit": 30,
+          "explanation": "DECO*27, kz, and ryo are legendary Miku producers. Hikakin is a Japanese YouTuber/beatboxer, not a Vocaloid producer."
+        },
+        {
+          "id": "set3-10",
+          "question": "Which three clues point toward Miku's '39' association? (Select all that apply)",
+          "options": ["'39' is used prominently in Miku-related song titles", "39 can be read as san-kyuu", "March 9 is celebrated by fans as Miku Day", "Miku's original voicebank was released in 1939"],
+          "correct": [0, 1, 2],
+          "time_limit": 30,
+          "explanation": "Songs like '39' (sasakure.UK) and '39Music!' reference the number; san-kyuu = 'thank you'; and March 9 is Miku Day. Miku was released in 2007, not 1939."
+        },
+        {
+          "id": "set3-11",
+          "question": "A player says: 'Teto is just another Crypton VOCALOID, like Miku.' What is the best correction?",
+          "options": ["Teto and Miku were released together by Crypton in 2007", "Teto is simply Miku's alternate costume", "Teto has a different origin and voice-synthesis history; she began with UTAU and later expanded to other synthesis platforms", "Teto is a Project SEKAI-original character created for the game"],
+          "correct": 2,
+          "time_limit": 30,
+          "explanation": "Teto was created by 2channel users as an April Fools' prank, released on UTAU, and later got Synthesizer V and VOICEPEAK versions via AH-Software/TWINDRILL. She is not Crypton-made, nor is she a Project SEKAI original."
+        },
+        {
+          "id": "set3-12",
+          "question": "Which chronology is the most accurate?",
+          "options": ["Project SEKAI launches → Miku debuts → Project DIVA launches → Teto is created", "Miku debuts in 2007 → Project DIVA era → Project SEKAI era → Teto's major modern crossover visibility", "Miku debuts → Teto is created → Project DIVA launches → Project SEKAI launches", "Teto is created → Miku debuts → Project SEKAI launches → Project DIVA launches"],
+          "correct": 1,
+          "time_limit": 30,
+          "explanation": "Miku debuted 2007 → Project DIVA began 2009 → Teto was created 2008 as a prank/UTAU but her major modern crossover visibility exploded with Synthesizer V (2023) and 'Mesmerizer' (2024) → Project SEKAI launched 2020. Option B is the only sequence that correctly orders the eras of mainstream visibility."
+        },
+        {
+          "id": "set3-13",
+          "question": "Which statement best captures why Miku remains culturally distinctive?",
+          "options": ["She is a shared creative platform: different producers, games, fans, and performers can reinterpret the same virtual singer", "She is a fixed fictional character whose songs, design, and personality are controlled entirely by one studio", "Her popularity comes mainly from one game rather than music creators", "Her catalogue is limited to officially released songs written by Crypton"],
+          "correct": 0,
+          "time_limit": 30,
+          "explanation": "Miku's enduring power comes from her status as an open creative platform. Thousands of independent producers, illustrators, dancers, and game developers have built a decentralized culture around her — something no single studio could control."
+        }
+      ]
+    },
+    {
+      "id": "set4",
+      "title": "Set 4 — Guess the Module",
       "type": "image",
       "questions": [
         {
           "id": "module-1",
           "question": "PLACEHOLDER Guess the Module question 1 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-1.jpg"
@@ -369,12 +350,7 @@
         {
           "id": "module-2",
           "question": "PLACEHOLDER Guess the Module question 2 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-2.jpg"
@@ -382,12 +358,7 @@
         {
           "id": "module-3",
           "question": "PLACEHOLDER Guess the Module question 3 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-3.jpg"
@@ -395,12 +366,7 @@
         {
           "id": "module-4",
           "question": "PLACEHOLDER Guess the Module question 4 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-4.jpg"
@@ -408,12 +374,7 @@
         {
           "id": "module-5",
           "question": "PLACEHOLDER Guess the Module question 5 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-5.jpg"
@@ -421,12 +382,7 @@
         {
           "id": "module-6",
           "question": "PLACEHOLDER Guess the Module question 6 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-6.jpg"
@@ -434,12 +390,7 @@
         {
           "id": "module-7",
           "question": "PLACEHOLDER Guess the Module question 7 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-7.jpg"
@@ -447,12 +398,7 @@
         {
           "id": "module-8",
           "question": "PLACEHOLDER Guess the Module question 8 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-8.jpg"
@@ -460,12 +406,7 @@
         {
           "id": "module-9",
           "question": "PLACEHOLDER Guess the Module question 9 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-9.jpg"
@@ -473,12 +414,7 @@
         {
           "id": "module-10",
           "question": "PLACEHOLDER Guess the Module question 10 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-10.jpg"
@@ -486,12 +422,7 @@
         {
           "id": "module-11",
           "question": "PLACEHOLDER Guess the Module question 11 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-11.jpg"
@@ -499,12 +430,7 @@
         {
           "id": "module-12",
           "question": "PLACEHOLDER Guess the Module question 12 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-12.jpg"
@@ -512,12 +438,7 @@
         {
           "id": "module-13",
           "question": "PLACEHOLDER Guess the Module question 13 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 20,
           "media": "/media/images/module-13.jpg"
@@ -525,19 +446,14 @@
       ]
     },
     {
-      "id": "song",
-      "title": "Guess the Song",
+      "id": "set5",
+      "title": "Set 5 — Guess the Song",
       "type": "audio",
       "questions": [
         {
           "id": "song-1",
           "question": "PLACEHOLDER Guess the Song question 1 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-1.mp3"
@@ -545,12 +461,7 @@
         {
           "id": "song-2",
           "question": "PLACEHOLDER Guess the Song question 2 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-2.mp3"
@@ -558,12 +469,7 @@
         {
           "id": "song-3",
           "question": "PLACEHOLDER Guess the Song question 3 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-3.mp3"
@@ -571,12 +477,7 @@
         {
           "id": "song-4",
           "question": "PLACEHOLDER Guess the Song question 4 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-4.mp3"
@@ -584,12 +485,7 @@
         {
           "id": "song-5",
           "question": "PLACEHOLDER Guess the Song question 5 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-5.mp3"
@@ -597,12 +493,7 @@
         {
           "id": "song-6",
           "question": "PLACEHOLDER Guess the Song question 6 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-6.mp3"
@@ -610,12 +501,7 @@
         {
           "id": "song-7",
           "question": "PLACEHOLDER Guess the Song question 7 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-7.mp3"
@@ -623,12 +509,7 @@
         {
           "id": "song-8",
           "question": "PLACEHOLDER Guess the Song question 8 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-8.mp3"
@@ -636,12 +517,7 @@
         {
           "id": "song-9",
           "question": "PLACEHOLDER Guess the Song question 9 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-9.mp3"
@@ -649,12 +525,7 @@
         {
           "id": "song-10",
           "question": "PLACEHOLDER Guess the Song question 10 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-10.mp3"
@@ -662,12 +533,7 @@
         {
           "id": "song-11",
           "question": "PLACEHOLDER Guess the Song question 11 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-11.mp3"
@@ -675,12 +541,7 @@
         {
           "id": "song-12",
           "question": "PLACEHOLDER Guess the Song question 12 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-12.mp3"
@@ -688,12 +549,7 @@
         {
           "id": "song-13",
           "question": "PLACEHOLDER Guess the Song question 13 — replace with real content",
-          "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ],
+          "options": ["Option A", "Option B", "Option C", "Option D"],
           "correct": 0,
           "time_limit": 15,
           "media": "/media/audio/song-13.mp3"
