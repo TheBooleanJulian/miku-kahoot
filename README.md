@@ -1,19 +1,48 @@
+<div align="center">
+
 # MIKU-19 Live Quiz
 
-Kahoot-style live quiz with no player cap. FastAPI + native WebSockets, in-memory
-room state, single host screen + single player screen. Four rounds:
+**A Kahoot-style live quiz built for Hatsune Miku's 19th birthday event — no player cap, FastAPI + native WebSockets.**
 
-| Round | Type | Questions | Notes |
-|---|---|---|---|
-| Miku Trivia | `text` | 13 | Vocaloid lore + producer/pairing questions |
-| General Trivia | `text` | 13 | plain question + 4 text options |
-| Guess the Module | `image` | 13 | cropped image of a Miku module/figure + 4 options |
-| Guess the Song | `audio` | 13 | 1s auto-playing clip + 4 song-name options |
+![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/-FastAPI-009688?logo=fastapi&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/license-AGPLv3%20%2B%20Commercial-00D4C8.svg)
 
-> A **Quick Test** round (2 `text` questions) is also included for fast
-> iteration — delete it via the admin dashboard once you're done testing.
+</div>
 
-## Run locally
+---
+
+## What it does
+
+A self-hosted, Kahoot-style live trivia game for a single in-person event. One host screen drives the game (projector/TV), and any number of players join from their phones with a 6-digit PIN and a nickname — no login or account required. Game state lives entirely in memory on the server process (no database), which keeps the stack simple at the cost of state resetting on a redeploy.
+
+## Features
+
+- Four question rounds: Miku Trivia (text), General Trivia (text), Guess the Module (image), Guess the Song (audio clip) — 13 questions each, plus a 2-question Quick Test round for iteration
+- Real-time host/player sync over native WebSockets (`/ws/host`, `/ws/player/{pin}`)
+- No player cap — bound only by server resources, not a pricing tier
+- Kahoot-style speed scoring (100–1000 points based on answer speed) with a 10% streak bonus after 3 correct answers in a row
+- Password-protected admin dashboard (`/admin`) for editing questions and uploading image/audio media, with extension and size validation (20 MB cap)
+- Auto-generated 6-digit game PIN per host session; players can join via PIN or a direct `?pin=` link
+- Animated podium/leaderboard reveal with confetti at round and game end
+- Standalone local script (`scripts/cut_clips.py`) to cut 1-second song clips from YouTube via `yt-dlp` + `ffmpeg` for the audio round
+
+## Tech Stack
+
+| Layer | Choice |
+|---|---|
+| Backend | FastAPI + native WebSockets |
+| State | In-memory (per-process, no database) |
+| Frontend | Server-rendered host/player/admin screens |
+| Media tooling | `yt-dlp` + `ffmpeg` (local clip-cutting script only) |
+| Hosting | Zeabur (Docker, root directory `backend`) |
+
+## Screenshots
+
+_Screenshots coming soon._
+
+## Quick Start
 
 ```bash
 cd backend
@@ -21,13 +50,19 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-- Landing page (links to the host and player screens): `http://localhost:8000/`
+- Landing page (links to host and player screens): `http://localhost:8000/`
 - Host screen (put this on the projector/TV): `http://localhost:8000/host`
 - Player screen (share this + the PIN): `http://localhost:8000/play`
 - Admin dashboard (edit questions / upload media): `http://localhost:8000/admin`
 
-The host screen generates a 6-digit PIN on load. Players enter it at `/play`
-(or you can share `/play?pin=123456` directly).
+The host screen generates a 6-digit PIN on load. Players enter it at `/play` (or share `/play?pin=123456` directly).
+
+## Configuration
+
+| Variable | Required | Description |
+|---|---|---|
+| `ADMIN_USER` | No | Admin dashboard username (falls back to `admin` with a startup warning if unset) |
+| `ADMIN_PASSWORD` | No | Admin dashboard password (falls back to a default with a startup warning if unset — change this in production) |
 
 ## Filling in real content
 
@@ -44,92 +79,59 @@ Edit `backend/questions.json`. Each round has 13 questions:
 ```
 
 - `correct` is the 0-indexed correct option.
-- Image round questions also need `"media": "/media/images/general-1.jpg"` —
-  drop the actual file into `backend/static/media/images/`.
-- Song round questions need `"media": "/media/audio/song-1.mp3"` — see below
-  for how to generate those from YouTube links.
+- Image round questions also need `"media": "/media/images/general-1.jpg"` — drop the file into `backend/static/media/images/`.
+- Song round questions need `"media": "/media/audio/song-1.mp3"` — see `scripts/cut_clips.py` for generating these from YouTube links.
 
-Once you send me the PDF of your actual questions (and, for the image round,
-tell me which crops/files to use), I'll fill `questions.json` in for you
-directly instead of you hand-editing JSON.
-
-## Admin security
-
-The admin dashboard (`/admin`) is password-protected, and all edits go through
-it (`/api/questions`, `/api/media`). Set the credentials as env vars (e.g. on
-Zeabur) so random players can't reach it:
+## Project Structure
 
 ```
-ADMIN_USER=<your-user>
-ADMIN_PASSWORD=<a-strong-password>
+miku-kahoot/
+├── backend/
+│   ├── main.py            # FastAPI app, WebSocket routes, room state
+│   ├── questions.json     # All round questions and media references
+│   ├── static/media/      # Uploaded/committed image & audio files
+│   └── requirements.txt
+├── scripts/
+│   └── cut_clips.py       # Local YouTube → 1s clip cutter (yt-dlp + ffmpeg)
+├── questions/              # Source question material
+└── Dockerfile
 ```
 
-Visiting `/admin` prompts for these credentials. If the env vars aren't set, it
-falls back to `admin` / `xymiku39` (a warning is logged at startup) — change
-them in production. Players' `host`/`play` pages and `/api/rounds` stay public.
-
-## Generating the song clips
-
-`scripts/cut_clips.py` is a **local** script — run it on your own machine (not
-here), since it needs real internet access to YouTube plus `yt-dlp` + `ffmpeg`.
-
-```bash
-pip install yt-dlp
-# ffmpeg via brew/apt/choco if you don't have it
-
-python scripts/cut_clips.py
-```
-
-Fill in the `CLIPS` list at the top of that file with each song's YouTube URL
-and the timestamp where the 1-second snippet should start — send me your
-list of links + timestamps and I'll write that list into the script for you.
-Output lands directly in `backend/static/media/audio/`, matching what
-`questions.json` expects.
-
-## Deploying (GitHub → Zeabur, same as your other apps)
+## Deploying (GitHub → Zeabur)
 
 1. Push this repo to GitHub.
 2. Create a new Zeabur service from the repo, root directory `backend`.
-3. Zeabur will pick up `requirements.txt` + `Procfile` automatically.
-4. Put `https://<your-zeabur-domain>/host` up on the projector/host screen and
-   point players at `https://<your-zeabur-domain>/play`. The lobby's join hint
-   is built from the page's own origin, so it always matches whatever host
-   serve the app.
+3. Zeabur picks up `requirements.txt` + `Procfile` automatically.
+4. Put `https://<your-zeabur-domain>/host` on the projector/host screen and point players at `https://<your-zeabur-domain>/play`.
 
-### Image & audio media
+Media uploaded via the admin dashboard is git-ignored and lives only in the running container — it's lost on redeploy. For persistent media, commit files into `backend/static/media/` directly (`git add -f`, since it's gitignored by default).
 
-Image and audio questions carry a `"media": "/media/…"` path. Two ways to get
-the files in place:
+## Status / Roadmap
 
-- **Upload via the admin dashboard** (`/admin`): pick a round → a question →
-  Upload. Files are validated by extension (jpg/jpeg/png/webp/gif for images,
-  mp3/ogg/wav for audio), capped at 20 MB, and served from `/media/…`.
-- **Commit them into the repo.** Media is git-ignored (see `.gitignore`), so
-  uploaded files live in the running container only and are **lost on redeploy**.
-  For persistent media, drop the files into `backend/static/media/images/` or
-  `backend/static/media/audio/` and force-add them (`git add -f`) so they ship
-  in the image.
+- [x] Four question rounds (text, image, audio) with a Quick Test round
+- [x] Real-time host/player sync over WebSockets
+- [x] Kahoot-style speed scoring with streak bonus
+- [x] Password-protected admin dashboard with media upload
+- [x] Animated podium reveal with confetti
+- [x] Local YouTube clip-cutting script for the audio round
+- [ ] Optional SQLite persistence for multi-session history/leaderboards
+- [ ] Session recovery after a mid-event redeploy
 
-No database, no external services — just the one process. Room state is
-in-memory, so a redeploy mid-event would reset any live game (fine for a
-single-session party quiz; let me know if you want SQLite persistence for
-multi-session history/leaderboards later).
+## Changelog
 
-## How scoring works
+- **2026-08-30** — Synced the timer via server broadcasts; split the question set into sets 1–3 with vetted sources
+- **2026-08-29** — Added player emoji picker, particles/animations, timer countdown, animated podium reveal with confetti, and a Quick Test round; password-protected the admin panel; supported image/audio questions on the player screen
+- **2026-08-28** — Initial commit: quiz backend, landing page, `/host` route, admin dashboard for editing questions and media, final podium with top-3 winners
 
-Kahoot-style speed bonus: correct answers score between 100–1000 points based
-on how fast you answered (faster = more points), plus a 10% bonus once you
-hit a 3-answer streak. Wrong answers score 0 and reset your streak.
+## License
 
-## Architecture notes
+This project is dual licensed.
 
-- One `Room` per game PIN, held in memory on the server process.
-- Host connects via `/ws/host` (gets a fresh PIN each time), drives the game:
-  pick round → start round → next question → reveal → leaderboard → repeat →
-  end game.
-- Players connect via `/ws/player/{pin}` with a nickname (no login/auth —
-  fine for a live event; duplicate names are allowed, each gets a unique
-  internal id).
-- No real cap on concurrent players — you're bound by server resources, not
-  a pricing tier. A small Zeabur instance comfortably handles hundreds of
-  WebSocket connections for a quiz like this.
+- Community Edition — [GNU Affero General Public License v3 (AGPLv3)](LICENSE). Free to use, modify, and self-host. If you distribute a modified version or run it as a network service, you must make the corresponding source available.
+- Commercial License — for organisations that want to embed, modify, or distribute this software without AGPLv3's obligations. See [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md).
+
+---
+
+<div align="center">
+<sub>Built by <a href="https://github.com/TheBooleanJulian">@TheBooleanJulian</a></sub>
+</div>
