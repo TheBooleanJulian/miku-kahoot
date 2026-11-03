@@ -1,0 +1,23 @@
+{
+  // MIKU-19 Live Quiz on Cloudflare Workers (port of backend/main.py). One Durable Object per room (by PIN);
+  // quiz edits + uploaded media in R2 bucket "miku-kahoot". Pages come from backend/static, served only via routes.
+  // Secret: ADMIN_PASSWORD (npx wrangler secret put ADMIN_PASSWORD). Without it /admin answers 401 for everyone.
+  "name": "miku-kahoot",
+  "account_id": "c580c4403524273d1bece674117472dd",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "vars": { "ADMIN_USER": "admin" },
+  "assets": {
+    "directory": "./backend/static",
+    "binding": "ASSETS",
+    "html_handling": "none",
+    "run_worker_first": true
+  },
+  "durable_objects": { "bindings": [{ "name": "ROOMS", "class_name": "Room" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "miku-kahoot" }],
+  // Overrides the *.thebooleanjulian.dev wildcard (Zeabur). Rollback: remove and redeploy.
+  "routes": [{ "pattern": "miku-kahoot.thebooleanjulian.dev", "custom_domain": true }],
+  "observability": { "enabled": true }
+}

@@ -5,3 +5,4 @@ backend/static/media/images/*
 backend/static/media/audio/*
 !backend/static/media/images/.gitkeep
 !backend/static/media/audio/.gitkeep
+.wrangler/
