@@ -6,7 +6,7 @@
 
 ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?logo=fastapi&logoColor=white)
-![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white)
+![Cloudflare Workers](https://img.shields.io/badge/-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)
 ![License](https://img.shields.io/badge/license-AGPLv3%20%2B%20Commercial-00D4C8.svg)
 
 </div>
@@ -32,11 +32,12 @@ A self-hosted, Kahoot-style live trivia game for a single in-person event. One h
 
 | Layer | Choice |
 |---|---|
-| Backend | FastAPI + native WebSockets |
-| State | In-memory (per-process, no database) |
-| Frontend | Server-rendered host/player/admin screens |
+| Backend (production) | Cloudflare Worker (`worker/index.js`): one Durable Object per room, WebSockets |
+| Backend (local dev) | FastAPI + native WebSockets (`backend/main.py`), same messages |
+| State | In-memory per room (Durable Object); quiz edits and uploaded media in R2 |
+| Frontend | Static host/player/admin screens (`backend/static`), served by route |
 | Media tooling | `yt-dlp` + `ffmpeg` (local clip-cutting script only) |
-| Hosting | Zeabur (Docker, root directory `backend`) |
+| Hosting | Cloudflare Workers at miku-kahoot.thebooleanjulian.dev |
 
 ## Screenshots
 
@@ -61,8 +62,8 @@ The host screen generates a 6-digit PIN on load. Players enter it at `/play` (or
 
 | Variable | Required | Description |
 |---|---|---|
-| `ADMIN_USER` | No | Admin dashboard username (falls back to `admin` with a startup warning if unset) |
-| `ADMIN_PASSWORD` | No | Admin dashboard password (falls back to a default with a startup warning if unset — change this in production) |
+| `ADMIN_USER` | No | Admin dashboard username (`admin` by default; a var in `wrangler.jsonc`) |
+| `ADMIN_PASSWORD` | Yes, for `/admin` | Admin dashboard password. On Workers it's a secret (`npx wrangler secret put ADMIN_PASSWORD`) with no default: unset means the admin dashboard is locked. The local FastAPI server still falls back to a default with a warning. |
 
 ## Filling in real content
 
@@ -89,22 +90,28 @@ miku-kahoot/
 ├── backend/
 │   ├── main.py            # FastAPI app, WebSocket routes, room state
 │   ├── questions.json     # All round questions and media references
-│   ├── static/media/      # Uploaded/committed image & audio files
+│   ├── static/            # host / player / admin / landing pages
 │   └── requirements.txt
+├── worker/
+│   └── index.js           # production: Cloudflare Worker + Room Durable Object (tests alongside)
+├── wrangler.jsonc
 ├── scripts/
 │   └── cut_clips.py       # Local YouTube → 1s clip cutter (yt-dlp + ffmpeg)
 ├── questions/              # Source question material
 └── Dockerfile
 ```
 
-## Deploying (GitHub → Zeabur)
+## Deploying (Cloudflare Workers)
 
-1. Push this repo to GitHub.
-2. Create a new Zeabur service from the repo, root directory `backend`.
-3. Zeabur picks up `requirements.txt` + `Procfile` automatically.
-4. Put `https://<your-zeabur-domain>/host` on the projector/host screen and point players at `https://<your-zeabur-domain>/play`.
+`npx wrangler deploy` from the repo root (`wrangler.jsonc`). Put `https://miku-kahoot.thebooleanjulian.dev/host` on the
+projector and point players at `/play`.
 
-Media uploaded via the admin dashboard is git-ignored and lives only in the running container — it's lost on redeploy. For persistent media, commit files into `backend/static/media/` directly (`git add -f`, since it's gitignored by default).
+- Each room is a Durable Object keyed by its PIN; the host and players hold WebSockets to it. Rooms end when the host
+  disconnects, as before.
+- Quiz edits saved in `/admin` go to R2 (`questions.json` in bucket `miku-kahoot`) and survive redeploys; until the first
+  save, `backend/questions.json` is used. Uploaded media is stored in the same bucket under `media/` and served at
+  `/media/...`.
+- Tests: `cd worker && node --test`.
 
 ## Status / Roadmap
 
@@ -118,6 +125,8 @@ Media uploaded via the admin dashboard is git-ignored and lives only in the runn
 - [ ] Session recovery after a mid-event redeploy
 
 ## Changelog
+
+- **2026-11-03** — Moved from Zeabur to Cloudflare Workers: rooms are Durable Objects, quiz edits and uploaded media persist in R2, and the admin dashboard has no default password.
 
 - **2026-08-30** — Synced the timer via server broadcasts; split the question set into sets 1–3 with vetted sources
 - **2026-08-29** — Added player emoji picker, particles/animations, timer countdown, animated podium reveal with confetti, and a Quick Test round; password-protected the admin panel; supported image/audio questions on the player screen
